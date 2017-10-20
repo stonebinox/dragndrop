@@ -4,7 +4,7 @@
     <div class="container" ng-controller="dd">
         <h1 class="text-center">Drag N Drop</h1>
         <hr>
-        <div class="well well-lg" ondrop="onDrop(event)" ondragover="allowDrop(event)">
+        <div class="well well-lg" ondrop="drop(event)" ondragover="allowDrop(event)">
             <div id="filepicker">
                 <p class="text-center">
                     <a href="#" class="lead" id="fileprompt" ng-click="pickFile()"><span class="glyphicon" style="font-size:25px;">&#xe022;</span></a>

@@ -10,12 +10,22 @@ function drop(e){
 }
 var app=angular.module("dragndrop",[]);
 app.controller('dd', function($scope,$compile){
+    $scope.drop=function(e){
+        var data=e.dataTransfer.files;
+        $scope.verifyFile(data);
+    };
     $scope.pickFile=function(){
         $("#file").trigger("click");
     };
-    $scope.verifyFile=function(){
-        var file=$("#file")[0].files[0];
-        var filename=$.trim($("#file").val());
+    $scope.verifyFile=function(data){
+        if((data!=null)&&(data!=undefined)){
+            var file=data[0];
+            var filename=$.trim(file.name);
+        }
+        else{
+            var file=$("#file")[0].files[0];
+            var filename=$.trim($("#file").val());
+        }
         if((filename!="")&&(filename!=null)){
             var sp=filename.split('\\');
             filename=sp[sp.length-1];
@@ -174,10 +184,6 @@ app.controller('dd', function($scope,$compile){
                 $("#filedetails").html('<div class="alert alert-danger"><strong>Invalid File</strong> This file cannot be uploaded. It could be a file type that is not permitted or it could be bigger than the specified file size limit.</div>');
             }
         }
-    };
-    $scope.drop=function(e){
-        var data=e.dataTransfer;
-        console.log(data);
     };
     $scope.renderProperties=function(properties){
         $("#prop-table").html('');
