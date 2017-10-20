@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block content %}
+<body ng-app="dragndrop">
+    <div class="container" ng-controller="dd">
+        <h1 class="text-center">Drag N Drop</h1>
+        <hr>
+        <div class="well well-lg" ondrop="onDrop(event)" ondragover="allowDrop(event)">
+            <div id="filepicker">
+                <p class="text-center">
+                    <a href="#" class="lead" id="fileprompt" ng-click="pickFile()"><span class="glyphicon" style="font-size:25px;">&#xe022;</span></a>
+                    <input type="file" id="file" name="file" style="display:none;" onchange="verifyFile()">
+                </p>
+                <p class="text-center">Drag and drop files here to verify them!</p>
+            </div>
+            <div id="filedetails" class="text-center"></div>
+        </div>
+        <div class="well well-lg">
+            <strong>Preferences</strong>
+            <p>You can tweak your preferences on what file types are permitted. You can also choose what file size to allow.</p>
+            <br>
+            <form name="filetypes" ng-init="images=true;music=true;videos=true;docs=true;">
+                <div class="form-group">
+                    <label>Permitted file types</label><br>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" name="image" ng-model="images" checked="true"> Images</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" name="audio" ng-model="music" checked="true"> Music</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" name="video" ng-model="videos" checked="true"> Videos</label>
+                </div>
+                <div class="checkbox">
+                    <label><input type="checkbox" name="docs" ng-model="docs" checked="true"> Other</label>
+                </div>
+            </form>
+            <br>
+            <p>You can set the permitted file size for the file being selected.</p>
+            <br>
+            <form name="filesize" id="filesize" ng-init="filesize=-1">
+                <div class="form-group">
+                    <select class="form-control" ng-model="filesize">
+                        <option value="-1">No limit</option>
+                        <script type="text/javascript">
+                        <!--
+                        var txt='';
+                        for(var i=1;i<=100;i++){
+                            txt+='<option value="'+i+'">'+i+' MB</option>';
+                        }
+                        document.write(txt);
+                        //-->
+                        </script>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+{% endblock %}

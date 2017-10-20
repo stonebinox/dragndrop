@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container-fluid">
+<br>
+    <h1>Welcome!&nbsp;&nbsp;<button type="button" class="btn btn-default" onclick="window.location='logout';">Log out</button></h1>
+    <br>
+    <h3 id="prodbut">Products</h3>
+  <div class="table-responsive" id="productholder">
+
+  </div>
+</div>
+<div id="myModal" class="modal fade" role="dialog"></div>
+<script type="text/javascript" src="js/dashboard.js"></script>
+{% endblock %}
