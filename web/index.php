@@ -56,6 +56,26 @@ $app->get("registration",function() use($app){
         return $app['twig']->render("registration.twig");
     }
 });
+$app->post("createAccount",function(Request $request) use($app){
+    if(($request->get("user_name"))&&($request->get("user_email"))&&($request->get("user_password"))&&($request->get("user_password2")))
+    {
+        require("../classes/userMaster.php");
+        $user=new userMaster;
+        $response=$user->createAccount($request->get("user_name"),$request->get("user_email"),$request->get("user_password"),$request->get("user_password2"));
+        if($response=="ACCOUNT_CREATED")
+        {
+            return $app->redirect("/login");
+        }
+        else
+        {
+            return $app->redirect("/registration");
+        }
+    }
+    else
+    {
+        return $app->redirect("registration");
+    }
+});
 $app->post("/login_action",function(Request $request) use($app){
     if(($request->get("user_email"))&&($request->get("user_password")))
     {
