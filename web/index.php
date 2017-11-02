@@ -41,4 +41,34 @@ $app->get('/',function() use($app){
 $app->get('/login',function() use($app){
     return $app['twig']->render("login.twig");
 });
+$app->post("/login_action",function(Request $request) use($app){
+    if(($request->get("user_email"))&&($request->get("user_password")))
+    {
+        require("../classes/userMaster.php");
+        $user=new userMaster;
+        $response=$user->authenticateUser($request->get("user_email"),$request->get("user_password"));
+        if($response=="AUTHENTICATE_USER")
+        {
+            return $app->redirect("/dashboard");
+        }
+        else
+        {
+            return $app->redirect("/login");
+        }
+    }
+    else
+    {
+        return $app->redirect("/login");
+    }
+});
+$app->get("/dashboard",function() use($app){
+    if($app['session']->get("uid"))
+    {
+        return $app['twig']->render("dashboard.twig");
+    }
+    else
+    {
+        return $app->redirect("/login");
+    }
+});
 $app->run();
