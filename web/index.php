@@ -82,7 +82,6 @@ $app->post("/login_action",function(Request $request) use($app){
         require("../classes/userMaster.php");
         $user=new userMaster;
         $response=$user->authenticateUser($request->get("user_email"),$request->get("user_password"));
-        return $response;
         if($response=="AUTHENTICATE_USER")
         {
             return $app->redirect("/dashboard");
