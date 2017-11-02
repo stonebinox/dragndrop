@@ -31,5 +31,7 @@ $app->before(function(Request $request) use($app){
 $app->get('/',function() use($app){
     return $app['twig']->render('index.twig'); 
 });
-
+$app->get('/login',function() use($app){
+    return $app['twig']->render("login.twig");
+});
 $app->run();
