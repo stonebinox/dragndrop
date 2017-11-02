@@ -29,7 +29,14 @@ $app->before(function(Request $request) use($app){
     $request->getSession()->start();
 });
 $app->get('/',function() use($app){
-    return $app['twig']->render('index.twig'); 
+    if($app['session']->get("uid"))
+    {
+        return $app['twig']->render('index.twig'); 
+    }
+    else
+    {
+        return $app->redirect('/login');
+    }
 });
 $app->get('/login',function() use($app){
     return $app['twig']->render("login.twig");

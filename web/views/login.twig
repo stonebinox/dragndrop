@@ -1,19 +1,23 @@
 {% extends "layout.html" %}
-
 {% block content %}
-<div class="container-fluid">
+<body>
+<div class="container">
 <br>
-  <form method="post" action="login_action" autocomplete="off">
-  <div class="form-group">
-    <label for="email">Email address:</label>
-    <input type="email" class="form-control" id="email" name="user_email" placeholder="Enter a valid email ID">
-  </div>
-  <div class="form-group">
-    <label for="pwd">Password:</label>
-    <input type="password" class="form-control" id="pwd" name="user_password" placeholder="Enter a valid password">
-  </div>
-  <button type="submit" class="btn btn-primary">Log In</button>&nbsp;&nbsp;<input type="button" value="Forgot password?" class="btn">
-</form>
+  <form name="login" method="post" action="login" autocomplete="off">
+      <h3>Log in to your account</h3>
+      <div class="form-group" id="uemail">
+          <label for="email">Email</label>
+          <input type="email" class="form-control" id="email" name="email" required placeholder="Enter a valid email ID">
+      </div>
+      <div class="form-group" id="upass">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" id="password" required placeholder="Enter a your account password">
+      </div>
+      <button type="submit" class="btn btn-primary" id="loginbutton">Log In</button>&nbsp;&nbsp;<button type="button" class="btn btn-default" onclick="window.location='registration';">Create an account</button>
+  </form>
 </div>
-
+<div class="container">
+  <div id="myModal" class="modal fade" role="dialog"></div>
+</div>
+</body>
 {% endblock %}
