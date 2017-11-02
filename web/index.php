@@ -39,7 +39,22 @@ $app->get('/',function() use($app){
     }
 });
 $app->get('/login',function() use($app){
-    return $app['twig']->render("login.twig");
+    if($app['session']->get("uid"))
+    {
+        return $app->redirect("/dashboard");
+    }
+    else{
+        return $app['twig']->render("login.twig");
+    }
+});
+$app->get("registration",function() use($app){
+    if($app['session']->get("uid"))
+    {
+        return $app->redirect("/dashboard");
+    }
+    else{
+        return $app['twig']->render("registration.twig");
+    }
 });
 $app->post("/login_action",function(Request $request) use($app){
     if(($request->get("user_email"))&&($request->get("user_password")))
