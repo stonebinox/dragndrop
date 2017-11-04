@@ -205,7 +205,7 @@ app.controller('dd', function($scope,$compile){
             $(tr2).append(td2);
             $("#prop-table").append(tr2);
         }
-
+        $scope.displayItemList();
     };
     $scope.displayItemList=function(){
         if($scope.itemList.length!=0){
