@@ -231,5 +231,38 @@ $app->post("/saveCampaign",function(Request $request) use($app){
         return "INVALID_PARAMETERS";
     }
 });
+$app->get("/campaign/{campaignID}",function($campaignID) use($app){
+    if($app['session']->get("uid"))
+    {
+        $campaignID=addslashes(htmlentities($campaignID));
+        require("../classes/userMaster.php");
+        require("../classes/brandMaster.php");
+        require("../classes/campaignMaster.php");
+        $campaign=new campaignMaster($campaignID);
+        if($campaign->campaignValid)
+        {
+            $app['session']->set("campaign_id",$campaignID);
+            return $app->redirect("/campaignView");
+        }
+        else
+        {
+            return $app->redirect("/brandView");
+        }
+    }
+    else
+    {
+        return $App->redirect("/brandView");
+    }
+});
+$app->get("/campaignView",function() use($app){
+    if(($app['session']->get("uid"))&&($app['session']->get("brand_id"))&&($app['session']->get("campaign_id")))
+    {
+        return $app['twig']->render("index.twig");
+    }
+    else
+    {
+        return $app->redirect("/login");
+    }
+});
 $app->run();
 ?>
