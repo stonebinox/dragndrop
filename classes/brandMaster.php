@@ -82,7 +82,7 @@ class brandMaster extends userMaster
     function getBrands()
     {
         $app=$this->app;
-        $bm="SELECT idbrand_master FROM brand_master WHERE stat='1' ORDER BY idbrand_master ASC";
+        $bm="SELECT idbrand_master FROM brand_master WHERE stat='1' ORDER BY idbrand_master DESC";
         $bm=$app['db']->fetchAll($bm);
         $brandArray=array();
         for($i=0;$i<count($bm);$i++)

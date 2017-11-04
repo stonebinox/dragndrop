@@ -204,3 +204,47 @@ app.controller('dd', function($scope,$compile){
         }
     };
 });
+app.controller("brands",function($scope,$compile,$http){
+    $scope.brand_id=null;
+    $scope.brandArray=[];
+    $scope.getBrands=function(){
+        $http.get('getBrands')
+        .then(function success(response){
+            response=response.data;
+            if(typeof response=="object"){
+                $scope.brandArray=response;
+                $scope.displayBrands();
+            }
+            else{
+                response=$.trim(response);
+                switch(response){
+                    case "INVALID_PARAMETERS":
+                    default:
+                    messageBox("Problem","Something went wrong while getting the list of brands. Please try again later. This is the error we see: "+response);
+                    break;
+                    case "NO_BRANDS_FOUND":
+                    $("#brandholder").html('No brands found. Create one to start.');
+                    break;
+                }
+
+            }
+        },
+        function failure(response){
+            messageBox("Problem","Something went wrong while getting the list of brands. Please try again later. This is the error we see: "+response);
+        });
+    };
+    $scope.displayBrands=function(){
+        if(validate($scope.brandArray)){
+            var brands=$scope.brandArray;
+            var list='<div class="list-group">';
+            for(var i=0;i<brands.length;i++){
+                var brand=brands[i];
+                var brandID=brand.idbrand_master;
+                var brandName=stripslahses(brand.brand_name);
+                list+='<a href="#" class="list-group-item">'+brandName+'</a>';
+            }
+            list+='</div>';
+            $("#brandholder").html(list);
+        }
+    };
+});

@@ -106,4 +106,23 @@ $app->get("/dashboard",function() use($app){
         return $app->redirect("/login");
     }
 });
+$app->get("/getBrands",function() use($app){
+    if($app['session']->get("uid")){
+        require("../classes/userMaster.php");
+        require("../classes/brandMaster.php");
+        $brandObj=new brandMaster;
+        $brands=$brandObj->getBrands();
+        if(is_array($brands))
+        {
+            return json_encode($brands);
+        }
+        else
+        {
+            return $brands;
+        }
+    }
+    else{
+        return "INVALID_PARAMETERS";
+    }
+});
 $app->run();
