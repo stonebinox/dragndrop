@@ -379,7 +379,7 @@ app.controller("campaigns",function($scope,$compile,$http){
             var list='<div class="list-group">';
             for(var i=0;i<campaigns.length;i++){
                 var campaign=campaigns[i];
-                var campaignID=campaign.idbrand_master;
+                var campaignID=campaign.idcampaign_master;
                 var campaignName=stripslashes(campaign.campaign_name);
                 list+='<a href="campaign/'+campaignID+'" class="list-group-item" data-toggle="tooltip" title="Edit this campaign" data-placement="auto">'+campaignName+'</a>';
             }

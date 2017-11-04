@@ -82,27 +82,36 @@ class brandMaster extends userMaster
     function getBrands()
     {
         $app=$this->app;
-        $bm="SELECT idbrand_master FROM brand_master WHERE stat='1' ORDER BY idbrand_master DESC";
-        $bm=$app['db']->fetchAll($bm);
-        $brandArray=array();
-        for($i=0;$i<count($bm);$i++)
+        $userID=$app['session']->get("uid");
+        userMaster::__construct($userID);
+        if($this->userValid)
         {
-            $brandRow=$bm[$i];
-            $brandID=$brandRow['idbrand_master'];
-            $this->__construct($brandID);
-            $brand=$this->getBrand();
-            if(is_array($brand))
+            $bm="SELECT idbrand_master FROM brand_master WHERE stat='1' AND user_master_iduser_master='$userID' ORDER BY idbrand_master DESC";
+            $bm=$app['db']->fetchAll($bm);
+            $brandArray=array();
+            for($i=0;$i<count($bm);$i++)
             {
-                array_push($brandArray,$brand);
+                $brandRow=$bm[$i];
+                $brandID=$brandRow['idbrand_master'];
+                $this->__construct($brandID);
+                $brand=$this->getBrand();
+                if(is_array($brand))
+                {
+                    array_push($brandArray,$brand);
+                }
             }
-        }
-        if(count($brandArray)>0)
-        {
-            return $brandArray;
+            if(count($brandArray)>0)
+            {
+                return $brandArray;
+            }
+            else
+            {
+                return "NO_BRANDS_FOUND";
+            }
         }
         else
         {
-            return "NO_BRANDS_FOUND";
+            return "INVALID_USER_ID";
         }
     }
     function addBrand($brandName,$brandDesc='')
