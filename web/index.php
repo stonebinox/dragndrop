@@ -138,7 +138,7 @@ $app->get("/getBrands",function() use($app){
         return "INVALID_PARAMETERS";
     }
 });
-$app->get("/saveBrand",function(Request $request) use($app){
+$app->post("/saveBrand",function(Request $request) use($app){
     if($app['session']->get("uid")){
         require("../classes/userMaster.php");
         require("../classes/brandMaster.php");
@@ -151,4 +151,27 @@ $app->get("/saveBrand",function(Request $request) use($app){
         return "INVALID_PARAMETERS";
     }
 });
+$app->get("/brandView",function() use($app){
+    if(($app['session']->get("uid"))&&($app['session']->get("brand_id")))
+    {
+        return $app['twig']->render("brand.twig");
+    }
+    else
+    {
+        return $app->redirect("/dashboard");
+    }
+});
+$app->get("/brand/{brandID}",function($brandID) use($app){
+    $brandID=addslashes(htmlentities($brandID));
+    if($app['session']->get("uid"))
+    {
+        $app['session']->set("brand_id",$brandID);
+        return $app->redirect("/brandView");
+    }
+    else
+    {
+        return $app->redirect("/login");
+    }
+});
 $app->run();
+?>

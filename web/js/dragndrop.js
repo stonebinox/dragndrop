@@ -240,11 +240,14 @@ app.controller("brands",function($scope,$compile,$http){
             for(var i=0;i<brands.length;i++){
                 var brand=brands[i];
                 var brandID=brand.idbrand_master;
-                var brandName=stripslahses(brand.brand_name);
-                list+='<a href="#" class="list-group-item">'+brandName+'</a>';
+                var brandName=stripslashes(brand.brand_name);
+                list+='<a href="brand/'+brandID+'" class="list-group-item" data-toggle="tooltip" title="Edit this brand" data-placement="auto">'+brandName+'</a>';
             }
             list+='</div>';
             $("#brandholder").html(list);
+            $('[data-toggle="tooltip"]').tooltip({
+                trigger: "hover"
+            });
         }
     };
     $scope.logout=function(){
@@ -258,7 +261,7 @@ app.controller("brands",function($scope,$compile,$http){
         $compile("#myModal")($scope);
     };
     $scope.saveBrand=function(){
-        var brandName=trim($("#brandname").val());
+        var brandName=$.trim($("#brandname").val());
         if(validate(brandName)){
             $("#brandname").parent().removeClass("has-error");
             var brandDesc=$.trim($("#branddesc").val());
@@ -273,9 +276,11 @@ app.controller("brands",function($scope,$compile,$http){
                     brand_desc: brandDesc
                 },
                 error:function(err){
-                    messageBox("Problem","Something went wrong while processing this request. Please try again later. This is the error we see: "+err);
+                    console.log(err);
+                    messageBox("Problem","Something went wrong while processing this request. Please try again later. This is the error we see: "+err.responseText);
                 },
                 success:function(response){
+                    response=$.trim(response);
                     $("#addbrandbut").removeClass("disabled");
                     if((validate(response))&&(response!="INVALID_PARAMETERS")){
                         if(response=="INVALID_USER_ID"){

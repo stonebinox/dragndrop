@@ -9,14 +9,12 @@
       <h1>Brand Management</h1>
     </div>
     <div class="col-sm-3">
-      <div class="btn-group" style="margin-top:20px;">
-        <button type="button" class="btn btn-primary" ng-click="addBrand()">Add Brand</button>
-        <button type="button" class="btn btn-default" ng-click="logout()">Log out</button>
-      </div>
+      <button type="button" class="btn btn-default" ng-click="logout()" style="margin-top:20px;">Log out</button>
     </div>
   </div>
+  <hr>
   <div class="panel panel-default" ng-init="getBrands()">
-    <div class="panel-heading"><strong>Brands</strong></div>
+    <div class="panel-heading"><strong>Brands</strong>&nbsp;&nbsp;<button type="button" class="btn btn-primary btn-sm" ng-click="addBrand()">Add Brand</button></div>
     <div class="panel-body" id="brandholder"></div>
   </div>
 </div>

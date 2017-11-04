@@ -64,11 +64,11 @@ class brandMaster extends userMaster
                 $userID=$bm['user_master_iduser_master'];
                 userMaster::__construct($userID);
                 $user=userMaster::getUser();
-                if(is_array($user,$userID))
+                if(is_array($user))
                 {
                     $bm['user_master_iduser_master']=$user;
                 }
-                return $sm;
+                return $bm;
             }
             else
             {
@@ -88,7 +88,7 @@ class brandMaster extends userMaster
         for($i=0;$i<count($bm);$i++)
         {
             $brandRow=$bm[$i];
-            $brandID=$brandRow[$i];
+            $brandID=$brandRow['idbrand_master'];
             $this->__construct($brandID);
             $brand=$this->getBrand();
             if(is_array($brand))
@@ -120,7 +120,7 @@ class brandMaster extends userMaster
                 $bm=$app['db']->fetchAssoc($bm);
                 if(($bm=="")||($bm==NULL))
                 {  
-                    $in="INSERT INTO brand_master (timestamp,brand_name,brand_desc,user_master_iduser_master) VALUES (NOW(),'$brandName','$brandDesc','$userID')";
+                    $in="INSERT INTO brand_master (timestamp,brand_name,brand_description,user_master_iduser_master) VALUES (NOW(),'$brandName','$brandDesc','$userID')";
                     $in=$app['db']->executeQuery($in);
                     return "BRAND_ADDED";
                 }
