@@ -264,7 +264,7 @@ $app->get("/campaignView",function() use($app){
         return $app->redirect("/login");
     }
 });
-$app->post("/addItem",function(Request $request) use($app){
+$app->post("/uploadItem",function(Request $request) use($app){
     if(($app['session']->get("uid"))&&($app['session']->get("brand_id"))&&($app['session']->get("campaign_id")))
     {
         require("../classes/userMaster.php");
