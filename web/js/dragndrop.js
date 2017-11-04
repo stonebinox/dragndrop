@@ -252,4 +252,8 @@ app.controller("brands",function($scope,$compile,$http){
         $scope.brandArray=[];
         window.location='logout';
     };
+    $scope.addBrand=function(){
+        var text='<form><div class="form-group"><label for="brandname">Brand name</label><input type="text" name="brandname" id="brandname" class="form-control" placeholder="Enter a valid brand name" required></div><div class="form-group"><label for="branddesc">Brand description</label><input type="text" name="branddesc" id="branddesc" placeholder="Enter some description (optional)"></div><div class="text-right"><button type="button" class="btn btn-primary">Add</button></form>';
+        messageBox("Add Brand",text);
+    };
 });
