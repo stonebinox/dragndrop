@@ -217,12 +217,75 @@ app.controller('dd', function($scope,$compile){
                 var filesize=properties[1];
                 filesize=filesize[1];
                 var filename=properties[0][1];
-                table+='<tr><td>'+filename+'</td><td>'+filesize+'</td><td><div class="btn-group" id="item'+i+'"><button type="button" class="btn btn-primary btn-xs">Upload</button><button type="button" class="btn btn-default btn-xs">Remove</button></div></td></tr>';
+                table+='<tr><td>'+filename+'</td><td>'+filesize+'</td><td><div class="btn-group" id="item'+i+'"><button type="button" class="btn btn-primary btn-xs" ng-click="uploadItem('+i+')">Upload</button><button type="button" class="btn btn-default btn-xs" ng-click="removeItem('+i+')">Remove</button></div></td></tr>';
             }
             table+='</tbody></table>';
             $("#itemlist").html(table);
+            $compile("#itemlist")($scope);
         }
-    }
+        else{
+            $("#itemlist").html('<p>No items selected.</p>');
+        }
+    };
+    $scope.removeItem=function(pos){
+        console.log("here");
+        $scope.itemList.splice(pos,1);
+        $scope.displayItemList();
+    };
+    $scope.uploadItem=function(pos){
+        var item=$scope.itemList[pos];
+        var file=item[0];
+        var formdata=new FormData();
+        formdata.append("items[]",file);
+        if(validate(file)){
+            $.ajax({
+                xhr: function() {
+                    var xhr = new window.XMLHttpRequest();
+                    xhr.upload.addEventListener("progress", function(evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = evt.loaded / evt.total;
+                            percentComplete = parseInt(percentComplete * 100);
+                            $("#progress"+pos).css("width",percentComplete+"%");
+                            if (percentComplete === 100) {
+                                $("#item"+pos).html('<span class="text-info">Please wait ...</span>');
+                            }
+                        }
+                    }, false);
+                    return xhr;
+                },
+                url: 'uploadItem',
+                method: 'POST',
+                data: formdata,
+                success:function(response){
+                    if((validate(response))&&(response!="INVALID_PARAMETERS")){
+                        if(response=="UPLOAD_ERROR"){
+                            messageBox("Upload Error","The file could not be uploaded. Please check with the admins and try again.");
+                        }
+                        else if(response=="INVALID_CAMPAIGN_ID"){
+                            window.location='brandView';
+                        }
+                        else if(response=="ITEM_ADDED")
+                        {
+                            $("#item"+pos).html('<span class="text-success">Uploaded</span>');
+                        }
+                        else{
+                            messageBox("Upload Error","Something went wrong while uploading this file. Please try again later. This is the error we see: "+response);
+                        }
+                    }
+                    else{
+                        messageBox("Upload Error","Something went wrong while uploading this file. Please try again later.");
+                    }
+                },
+                error:function(response){
+                    console.log(response);
+                    messageBox("Network Error","Something went wrong while uploading this file. Please try again later.");
+                },
+                beforeSend:function(){
+                    $("#item"+pos).html('<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="0"                    aria-valuemin="0" aria-valuemax="100" style="width:0%" id="progress'+pos+'"></div></div>');
+                }
+            });
+        }
+    };
 });
 app.controller("brands",function($scope,$compile,$http){
     $scope.brand_id=null;

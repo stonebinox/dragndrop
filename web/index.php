@@ -264,5 +264,21 @@ $app->get("/campaignView",function() use($app){
         return $app->redirect("/login");
     }
 });
+$app->post("/addItem",function(Request $request) use($app){
+    if(($app['session']->get("uid"))&&($app['session']->get("brand_id"))&&($app['session']->get("campaign_id")))
+    {
+        require("../classes/userMaster.php");
+        require("../classes/brandMaster.php");
+        require("../classes/campaignMaster.php");
+        require("../classes/itemMaster.php");
+        $itemObj=new itemMaster;
+        $response=$itemObj->addItem($app['session']->get("campaign_id"),$request->get("items")[0]);
+        return $response;
+    }
+    else
+    {
+        return "INVALID_PARAMETERS";
+    }
+});
 $app->run();
 ?>
