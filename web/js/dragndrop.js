@@ -247,7 +247,7 @@ app.controller('dd', function($scope,$compile){
                             percentComplete = parseInt(percentComplete * 100);
                             $("#progress"+pos).css("width",percentComplete+"%");
                             if (percentComplete === 100) {
-                                $("#item"+pos).html('<span class="text-info">Please wait ...</span>');
+                                $("#item"+pos).html('<p class="text-info">Please wait ...</p>');
                             }
                         }
                     }, false);
@@ -269,7 +269,7 @@ app.controller('dd', function($scope,$compile){
                         }
                         else if(response=="ITEM_ADDED")
                         {
-                            $("#item"+pos).html('<span class="text-success">Uploaded</span>');
+                            $("#item"+pos).html('<p class="text-success">Uploaded</p>');
                         }
                         else{
                             messageBox("Upload Error","Something went wrong while uploading this file. Please try again later. This is the error we see: "+response);
