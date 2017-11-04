@@ -247,4 +247,9 @@ app.controller("brands",function($scope,$compile,$http){
             $("#brandholder").html(list);
         }
     };
+    $scope.logout=function(){
+        $scope.brand_id=null;
+        $scope.brandArray=[];
+        window.location='logout';
+    };
 });

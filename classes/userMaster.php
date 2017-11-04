@@ -174,7 +174,7 @@ class userMaster
             return "INVALID_USER_NAME";
         }
     }
-    function logoutUser() //to log a user out
+    function logout() //to log a user out
     {
         if($this->userValid)
         {

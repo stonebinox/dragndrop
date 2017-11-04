@@ -96,6 +96,19 @@ $app->post("/login_action",function(Request $request) use($app){
         return $app->redirect("/login");
     }
 });
+$app->get("logout",function() use($app){
+    if($app['session']->get("uid")){
+        require("../classes/userMaster.php");
+        $userID=$app['session']->get("uid");
+        $user=new userMaster($userID);
+        $response=$user->logout();
+        return $app->redirect("/login");
+    }
+    else
+    {
+        return $app->redirect("/login");
+    }
+});
 $app->get("/dashboard",function() use($app){
     if($app['session']->get("uid"))
     {

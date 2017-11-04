@@ -4,11 +4,18 @@
 <div class="container" ng-controller="brands">
 <div style="background:url(images/dragcheck.png) no-repeat center;-webkit-background-size:contain;-moz-background-size:contain;background-size:contain;width:100%;height:80px;"></div>
 <hr>
-    <h1>Brand Management</h1>
-    <div class="panel panel-default" ng-init="getBrands()">
-      <div class="panel-heading"><strong>Brands</strong></div>
-      <div class="panel-body" id="brandholder"></div>
+  <div class="row">
+    <div class="col-sm-8">
+      <h1>Brand Management</h1>
     </div>
+    <div class="col-sm-4">
+      <button type="button" class="btn btn-default" ng-click="logout()">Log out</button>
+    </div>
+  </div>
+  <div class="panel panel-default" ng-init="getBrands()">
+    <div class="panel-heading"><strong>Brands</strong></div>
+    <div class="panel-body" id="brandholder"></div>
+  </div>
 </div>
 <div class="container">
   <div id="myModal" class="modal fade" role="dialog"></div>
