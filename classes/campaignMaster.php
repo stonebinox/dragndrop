@@ -26,12 +26,12 @@ class campaignMaster extends brandMaster
         {
             $app=$this->app;
             $campaignID=$this->campaign_id;
-            $cm="SELECT brand_master_idbrand_master WHERE stat='1' AND idcampaign_master='$campaignID'";
+            $cm="SELECT brand_master_idbrand_master FROM campaign_master WHERE stat='1' AND idcampaign_master='$campaignID'";
             $cm=$app['db']->fetchAssoc($cm);
             if(($cm!="")&&($cm!=NULL))
             {
                 $brandID=$cm['brand_master_idbrand_master'];
-                brandMaster::__construct($branAOI);
+                brandMaster::__construct($brandID);
                 if($this->brandValid)
                 {
                     return true;
@@ -101,7 +101,7 @@ class campaignMaster extends brandMaster
             }
             if(count($campaignArray)>0)
             {
-                return $campaginArray;
+                return $campaignArray;
             }
             else
             {
@@ -127,7 +127,7 @@ class campaignMaster extends brandMaster
                 $cm=$app['db']->fetchAssoc($cm);
                 if(($cm=="")||($cm==NULL))
                 {
-                    $in="INSERT INTO campaign_master (timestamp,campaign_name,campaign_description,brand_master_idbrand_master) VALUES (NOW(),'$campaignName','$campignDesc','$brandID')";
+                    $in="INSERT INTO campaign_master (timestamp,campaign_name,campaign_description,brand_master_idbrand_master) VALUES (NOW(),'$campaignName','$campaignDesc','$brandID')";
                     $in=$app['db']->executeQuery($in);
                     return "CAMPAIGN_ADDED";
                 }
