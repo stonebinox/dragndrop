@@ -105,5 +105,39 @@ class brandMaster extends userMaster
             return "NO_BRANDS_FOUND";
         }
     }
+    function addBrand($brandName,$brandDesc='')
+    {
+        $app=$this->app;
+        $userID=$app['session']->get("uid");
+        userMaster::__construct($userID);
+        if($this->userValid)
+        {
+            $brandName=trim(addslashes(htmlentities($brandName)));
+            if(($brandName!="")&&($brandName!=NULL))
+            {
+                $brandDesc=trim(addslashes(htmlentities($brandDesc)));
+                $bm="SELECT idbrand_master FROM brand_master WHERE stat='1' AND brand_name='$brandName' AND user_master_iduser_master='$userID'";
+                $bm=$app['db']->fetchAssoc($bm);
+                if(($bm=="")||($bm==NULL))
+                {  
+                    $in="INSERT INTO brand_master (timestamp,brand_name,brand_desc,user_master_iduser_master) VALUES (NOW(),'$brandName','$brandDesc','$userID')";
+                    $in=$app['db']->executeQuery($in);
+                    return "BRAND_ADDED";
+                }
+                else
+                {
+                    return "BRAND_ALREADY_EXISTS";
+                }
+            }
+            else
+            {
+                return "INVALID_BRAND_NAME";
+            }
+        }
+        else
+        {
+            return "INVALID_USER_ID";
+        }
+    }
 }
 ?>

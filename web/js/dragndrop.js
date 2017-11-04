@@ -253,7 +253,59 @@ app.controller("brands",function($scope,$compile,$http){
         window.location='logout';
     };
     $scope.addBrand=function(){
-        var text='<form><div class="form-group"><label for="brandname">Brand name</label><input type="text" name="brandname" id="brandname" class="form-control" placeholder="Enter a valid brand name" required></div><div class="form-group"><label for="branddesc">Brand description</label><input type="text" name="branddesc" id="branddesc" placeholder="Enter some description (optional)"></div><div class="text-right"><button type="button" class="btn btn-primary">Add</button></form>';
+        var text='<form><div class="form-group"><label for="brandname">Brand name</label><input type="text" name="brandname" id="brandname" class="form-control" placeholder="Enter a valid brand name" required></div><div class="form-group"><label for="branddesc">Brand description</label><input type="text" name="branddesc" id="branddesc" class="form-control" placeholder="Enter some description (optional)"></div><div class="text-left"><button type="button" class="btn btn-primary" id="addbrandbut" ng-click="saveBrand()">Add Brand</button></form>';
         messageBox("Add Brand",text);
+        $compile("#myModal")($scope);
+    };
+    $scope.saveBrand=function(){
+        var brandName=trim($("#brandname").val());
+        if(validate(brandName)){
+            $("#brandname").parent().removeClass("has-error");
+            var brandDesc=$.trim($("#branddesc").val());
+            if(!validate(brandDesc)){
+                brandDesc='';
+            }
+            $.ajax({
+                url:"saveBrand",
+                method: "POST",
+                data:{
+                    brand_name: brandName,
+                    brand_desc: brandDesc
+                },
+                error:function(err){
+                    messageBox("Problem","Something went wrong while processing this request. Please try again later. This is the error we see: "+err);
+                },
+                success:function(response){
+                    $("#addbrandbut").removeClass("disabled");
+                    if((validate(response))&&(response!="INVALID_PARAMETERS")){
+                        if(response=="INVALID_USER_ID"){
+                            $scope.logout();
+                        }
+                        else if(response=="INVALID_BRAND_NAME"){
+                            messageBox("Invalid Brand Name","Please enter a valid brand name.");
+                        }
+                        else if(response=="BRAND_ALREADY_EXISTS"){
+                            messageBox("Brand Exists","A brand by the same name already exists.");
+                        }
+                        else if(response=="BRAND_ADDED"){
+                            messageBox("Brand Added","Brand was created successfully.");
+                            $scope.getBrands();
+                        }
+                        else{
+                            messageBox("Problem","Something went wrong while processing this request. Please try again later. This is the error we see: "+response);    
+                        }
+                    }
+                    else{
+                        messageBox("Problem","Something went wrong while processing this request. Please try again later. This is the error we see: "+response);
+                    }
+                },
+                beforeSend:function(){
+                    $("#addbrandbut").addClass("disabled");
+                }
+            });
+        }
+        else{
+            $("#brandname").parent().addClass("has-error");
+        }
     };
 });

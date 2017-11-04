@@ -138,4 +138,17 @@ $app->get("/getBrands",function() use($app){
         return "INVALID_PARAMETERS";
     }
 });
+$app->get("/saveBrand",function(Request $request) use($app){
+    if($app['session']->get("uid")){
+        require("../classes/userMaster.php");
+        require("../classes/brandMaster.php");
+        $brand=new brandMaster;
+        $response=$brand->addBrand($request->get("brand_name"),$request->get("brand_desc"));
+        return $response;
+    }  
+    else
+    {
+        return "INVALID_PARAMETERS";
+    }
+});
 $app->run();
