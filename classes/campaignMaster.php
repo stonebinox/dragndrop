@@ -85,7 +85,7 @@ class campaignMaster extends brandMaster
         brandMaster::__construct($brandID);
         if($this->brandValid)
         {
-            $cm="SELECT idcampaign_master FROM campaign_master WHERE stat='1' AND brand_master_idbrand_master='$brand' ORDER BY idcampaign_master DESC";
+            $cm="SELECT idcampaign_master FROM campaign_master WHERE stat='1' AND brand_master_idbrand_master='$brandID' ORDER BY idcampaign_master DESC";
             $cm=$app['db']->fetchAll($cm);
             $campaignArray=array();
             for($i=0;$i<count($cm);$i++)
@@ -106,6 +106,38 @@ class campaignMaster extends brandMaster
             else
             {
                 return "NO_CAMPAIGNS_FOUND";
+            }
+        }
+        else
+        {
+            return "INVALID_BRAND_ID";
+        }
+    }
+    function addCampaign($campaignName,$campaignDesc)
+    {
+        $app=$this->app;
+        $brandID=addslashes(htmlentities($app['session']->get("brand_id")));
+        brandMaster::__construct($brandID);
+        if($this->brandValid)
+        {
+            $campaignName=trim(addslashes(htmlentities($campaignName)));
+            if(($campaignName!="")&&($campaignName!=NULL)){
+                $campaignDesc=trim(addslashes(htmlentities($campaignDesc)));
+                $cm="SELECT idcampaign_master FROM campaign_master WHERE stat='1' AND campaign_name='$campaignName' AND brand_master_idbrand_master='$brandID'";
+                $cm=$app['db']->fetchAssoc($cm);
+                if(($cm=="")||($cm==NULL))
+                {
+                    $in="INSERT INTO campaign_master (timestamp,campaign_name,campaign_description,brand_master_idbrand_master) VALUES (NOW(),'$campaignName','$campignDesc','$brandID')";
+                    $in=$app['db']->executeQuery($in);
+                    return "CAMPAIGN_ADDED";
+                }
+                else
+                {
+                    return "CAMPAIGN_ALREADY_EXISTS";
+                }
+            }
+            else{
+                return "INVALID_CAMPAIGN_NAME";
             }
         }
         else

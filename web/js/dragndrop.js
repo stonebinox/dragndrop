@@ -314,3 +314,138 @@ app.controller("brands",function($scope,$compile,$http){
         }
     };
 });
+app.controller("campaigns",function($scope,$compile,$http){
+    $scope.brandArray=[];
+    $scope.brand_id=null;
+    $scope.campaignArray=[];
+    $scope.getBrand=function(){
+        $http.get("getBrand")
+        .then(function success(response){
+            response=response.data;
+            if(typeof response=="object"){
+                $scope.brandArray=response;
+                $scope.brand_id=response.idbrand_master;
+                var brandName=stripslashes(response.brand_name);
+                $("#brandname").html(brandName);
+            }
+            else{
+                response=$.trim(response);
+                switch(response){
+                    case "INVALID_PARAMETERS":
+                    default:
+                    messageBox("Problem","Something went wrong while loading some information. Please try again later. This is the error we see: "+response);
+                    break;
+                    case "INVALID_BRAND_ID":
+                    window.location='dashboard';
+                    break;
+                }
+            }
+        },
+        function failure(response){
+            messageBox("Problem","Something went wrong while loading some information. Please try again later. This is the error we see: "+response);
+        });
+    };
+    $scope.getCampaigns=function(){
+        $http.get("getCampaigns")
+        .then(function success(response){
+            response=response.data;
+            if(typeof response=="object"){
+                $scope.campaignArray=response;
+                $scope.displayCampaigns();
+            }  
+            else{
+                response=$.trim(response);
+                switch(response){
+                    case "INVALID_PARAMETERS":
+                    default:
+                    messageBox("Problem","Something went wrong while loading campaigns for this brand. Please try again later. This is the error we see: "+response);
+                    break;
+                    case "INVALID_BRAND_ID":
+                    window.location='dashboard';
+                    break;
+                    case "NO_CAMPAIGNS_FOUND":
+                    $("#campaignholder").html('No campaigns found. Create one to start.');
+                    break;
+                }
+            }
+        },
+        function error(response){
+            messageBox("Problem","Something went wrong while loading campaigns for this brand. Please try again later. This is the error we see: "+response);
+        });
+    };
+    $scope.displayCampaigns=function(){
+        if(validate($scope.campaignArray)){
+            var campaigns=$scope.campaignArray;
+            var list='<div class="list-group">';
+            for(var i=0;i<campaigns.length;i++){
+                var campaign=campaigns[i];
+                var campaignID=campaign.idbrand_master;
+                var campaignName=stripslashes(campaign.campaign_name);
+                list+='<a href="campaign/'+campaignID+'" class="list-group-item" data-toggle="tooltip" title="Edit this campaign" data-placement="auto">'+campaignName+'</a>';
+            }
+            list+='</div>';
+            $("#campaignholder").html(list);
+            $('[data-toggle="tooltip"]').tooltip({
+                trigger: "hover"
+            });
+        }
+    };
+    $scope.addCampaign=function(){
+        var text='<form><div class="form-group"><label for="campname">Campaign name</label><input type="text" name="campname" id="campname" class="form-control" placeholder="Enter a valid campaign name" required></div><div class="form-group"><label for="campdesc">Campaign description</label><input type="text" name="campdesc" id="campdesc" class="form-control" placeholder="Enter some description (optional)"></div><div class="text-left"><button type="button" class="btn btn-primary" id="addcampbut" ng-click="saveCampaign()">Add Campaign</button></form>';
+        messageBox("Add Campaign",text);
+        $compile("#myModal")($scope);
+    };
+    $scope.saveCampaign=function(){
+        var campName=$.trim($("#campname").val());
+        if(validate(campName)){
+            $("#campname").parent().removeClass("has-error");
+            var campDesc=$.trim($("#campdesc").val());
+            if(!validate(campDesc)){
+                campDesc='';
+            }
+            $.ajax({
+                url:"saveCampaign",
+                method: "POST",
+                data:{
+                    campaign_name: campName,
+                    camp_desc: campDesc
+                },
+                error:function(err){
+                    console.log(err);
+                    messageBox("Problem","Something went wrong while processing this request. Please try again later. This is the error we see: "+err.responseText);
+                },
+                success:function(response){
+                    response=$.trim(response);
+                    $("#addcampbut").removeClass("disabled");
+                    if((validate(response))&&(response!="INVALID_PARAMETERS")){
+                        if(response=="INVALID_USER_ID"){
+                            $scope.logout();
+                        }
+                        else if(response=="INVALID_CAMPAIGN_NAME"){
+                            messageBox("Invalid Campaign Name","Please enter a valid campaign name.");
+                        }
+                        else if(response=="CAMPAIGN_ALREADY_EXISTS"){
+                            messageBox("Campaign Exists","A campaign by the same name already exists.");
+                        }
+                        else if(response=="CAMPAIGN_ADDED"){
+                            messageBox("Campaign Added","Campaign was created successfully.");
+                            $scope.getCampaigns();
+                        }
+                        else{
+                            messageBox("Problem","Something went wrong while processing this request. Please try again later. This is the error we see: "+response);    
+                        }
+                    }
+                    else{
+                        messageBox("Problem","Something went wrong while processing this request. Please try again later. This is the error we see: "+response);
+                    }
+                },
+                beforeSend:function(){
+                    $("#addcampbut").addClass("disabled");
+                }
+            });
+        }
+        else{
+            $("#campname").parent().addClass("has-error");
+        }
+    };
+});

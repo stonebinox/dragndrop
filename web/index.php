@@ -173,5 +173,63 @@ $app->get("/brand/{brandID}",function($brandID) use($app){
         return $app->redirect("/login");
     }
 });
+$app->get("/getBrand",function() use($app){
+    if(($app['session']->get("uid"))&&($app['session']->get("brand_id")))
+    {
+        require("../classes/userMaster.php");
+        require("../classes/brandMaster.php");
+        $brandID=$app['session']->get("brand_id");
+        $brandObj=new brandMaster($brandID);
+        $brand=$brandObj->getBrand();
+        if(is_array($brand))
+        {
+            return json_encode($brand);
+        }
+        else
+        {
+            return $brand;
+        }
+    }
+    else
+    {
+        return "INVALID_PARAMETERS";
+    }
+});
+$app->get("/getCampaigns",function() use($app){
+    if(($app['session']->get("uid"))&&($app['session']->get("brand_id")))
+    {
+        require("../classes/userMaster.php");
+        require("../classes/brandMaster.php");
+        require("../classes/campaignMaster.php");
+        $campObj=new campaignMaster;
+        $campaigns=$campObj->getCampaigns($app['session']->get("brand_id"));
+        if(is_array($campaigns))
+        {
+            return json_encode($campaigns);
+        }
+        else
+        {
+            return $campaigns;
+        }
+    }
+    else
+    {
+        return "INVAID_PARAMETERS";
+    }
+});
+$app->post("/saveCampaign",function(Request $request) use($app){
+    if($app['session']->get("uid")){
+        require("../classes/userMaster.php");
+        require("../classes/brandMaster.php");
+        require("../classes/campaignMaster.php");
+        $campaign=new campaignMaster;
+        $response=$campaign->addCampaign($request->get("campaign_name"),$request->get("campaign_desc"));
+        return $response;
+    }  
+    else
+    {
+        return "INVALID_PARAMETERS";
+    }
+});
 $app->run();
 ?>
