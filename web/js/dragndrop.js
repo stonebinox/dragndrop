@@ -10,6 +10,7 @@ function drop(e){
 }
 var app=angular.module("dragndrop",[]);
 app.controller('dd', function($scope,$compile){
+    $scope.itemList=[];
     $scope.drop=function(e){
         var data=e.dataTransfer.files;
         $scope.verifyFile(data);
@@ -161,7 +162,9 @@ app.controller('dd', function($scope,$compile){
                 properties.push(arr);
                 arr=["File type",ext];
                 properties.push(arr);
-                //var properties=[["File name",filename],["File size",filesize],["File type",ext]];
+                var fileEntry=new Array();
+                fileEntry.push(file,properties);
+                $scope.itemList.push(fileEntry);
                 var table=document.createElement("table");
                 $(table).addClass("table");
                     var thead=document.createElement("thead");
@@ -202,7 +205,23 @@ app.controller('dd', function($scope,$compile){
             $(tr2).append(td2);
             $("#prop-table").append(tr2);
         }
+
     };
+    $scope.displayItemList=function(){
+        if($scope.itemList.length!=0){
+            var items=$scope.itemList.slice();
+            var table='<table class="table"><thead><tr><th>File name</th><th>File size</th><th>Actions</th></tr></thead><tbody>';
+            for(var i=0;i<items.length;i++){
+                var item=items[i];
+                var itemName=item[0];
+                var properties=item[1];
+                var filesize=properties[1];
+                table+='<tr><td>'+itemName+'</td><td>'+filesize+'</td></tr>';
+            }
+            table+='</tbody></table>';
+            $("#itemlist").html(table);
+        }
+    }
 });
 app.controller("brands",function($scope,$compile,$http){
     $scope.brand_id=null;
