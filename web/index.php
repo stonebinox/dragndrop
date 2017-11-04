@@ -257,7 +257,7 @@ $app->get("/campaign/{campaignID}",function($campaignID) use($app){
 $app->get("/campaignView",function() use($app){
     if(($app['session']->get("uid"))&&($app['session']->get("brand_id"))&&($app['session']->get("campaign_id")))
     {
-        return $app['twig']->render("index.twig");
+        return $app['twig']->render("index.html.twig");
     }
     else
     {
