@@ -217,7 +217,7 @@ app.controller('dd', function($scope,$compile){
                 var filesize=properties[1];
                 filesize=filesize[1];
                 var filename=properties[0][1];
-                table+='<tr><td>'+filename+'</td><td>'+filesize+'</td></tr>';
+                table+='<tr><td>'+filename+'</td><td>'+filesize+'</td><td><div class="btn-group" id="item'+i+'"><button type="button" class="btn btn-primary btn-xs">Upload</button><button type="button" class="btn btn-default btn-xs">Remove</button></div></td></tr>';
             }
             table+='</tbody></table>';
             $("#itemlist").html(table);
