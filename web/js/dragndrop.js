@@ -256,6 +256,9 @@ app.controller('dd', function($scope,$compile){
                 url: 'uploadItem',
                 method: 'POST',
                 data: formdata,
+                processData:false,
+                contentType: false,
+                cache: false,
                 success:function(response){
                     if((validate(response))&&(response!="INVALID_PARAMETERS")){
                         if(response=="UPLOAD_ERROR"){
