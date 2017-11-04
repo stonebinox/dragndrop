@@ -213,9 +213,10 @@ app.controller('dd', function($scope,$compile){
             var table='<table class="table"><thead><tr><th>File name</th><th>File size</th><th>Actions</th></tr></thead><tbody>';
             for(var i=0;i<items.length;i++){
                 var item=items[i];
-                var itemName=item[0];
                 var properties=item[1];
                 var filesize=properties[1];
+                filesize=filesize[1];
+                var filename=properties[0][1];
                 table+='<tr><td>'+itemName+'</td><td>'+filesize+'</td></tr>';
             }
             table+='</tbody></table>';
