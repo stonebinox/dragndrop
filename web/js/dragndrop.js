@@ -260,6 +260,7 @@ app.controller('dd', function($scope,$compile){
                 contentType: false,
                 cache: false,
                 success:function(response){
+                    console.log(response);
                     if((validate(response))&&(response!="INVALID_PARAMETERS")){
                         if(response=="UPLOAD_ERROR"){
                             messageBox("Upload Error","The file could not be uploaded. Please check with the admins and try again.");
