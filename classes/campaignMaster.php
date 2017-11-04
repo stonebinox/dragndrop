@@ -50,5 +50,68 @@ class campaignMaster extends brandMaster
             return false;
         }
     }
+    function getCampaign()
+    {
+        if($this->campaignValid)
+        {
+            $app=$this->app;
+            $campaignID=$this->campaign_id;
+            $cm="SELECT * FROM campaign_master WHERE idcampaign_master='$campaignID'";
+            $cm=$app['db']->fetchAssoc($cm);
+            if(($cm!="")&&($cm!=NULL))
+            {
+                $brandID=$cm['brand_master_idbrand_master'];
+                brandMaster::__construct($brandID);
+                $brand=brandMaster::getBrand();
+                if(is_array($brand)){
+                    $cm['brand_master_idbrand_master']=$brand;
+                }
+                return $cm;
+            }
+            else
+            {
+                return "INVALID_CAMPAIGN_ID";
+            }
+        }
+        else
+        {
+            return "INVALID_CAMPAIGN_ID";
+        }
+    }
+    function getCampaigns($brandID)
+    {
+        $app=$this->app;
+        $brandID=addslashes(htmlentities($brandID));
+        brandMaster::__construct($brandID);
+        if($this->brandValid)
+        {
+            $cm="SELECT idcampaign_master FROM campaign_master WHERE stat='1' AND brand_master_idbrand_master='$brand' ORDER BY idcampaign_master DESC";
+            $cm=$app['db']->fetchAll($cm);
+            $campaignArray=array();
+            for($i=0;$i<count($cm);$i++)
+            {
+                $campaignRow=$cm[$i];
+                $campaignID=$campaignRow['idcampaign_master'];
+                $this->__construct($campaignID);
+                $campaign=$this->getCampaign();
+                if(is_array($campaign))
+                {
+                    array_push($campaignArray,$campaign);
+                }
+            }
+            if(count($campaignArray)>0)
+            {
+                return $campaginArray;
+            }
+            else
+            {
+                return "NO_CAMPAIGNS_FOUND";
+            }
+        }
+        else
+        {
+            return "INVALID_BRAND_ID";
+        }
+    }
 }
 ?>
