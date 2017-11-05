@@ -123,7 +123,6 @@ class itemMaster extends campaignMaster
         {
             $file=$fileObj["tmp_name"];
             $itemName=addslashes(htmlentities($fileObj['name']));
-            return $itemName;
             $nameParts='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
             do{
                 $fileName='';
@@ -134,6 +133,7 @@ class itemMaster extends campaignMaster
                 }
             }while(file_exists("../uploads/".$fileName.".".$ext));
             $path='../uploads/'.$fileName.'.'.$ext;
+            return $path;
             $realName=trim(addslashes(htmlentities(basename($fileObj["name"]))));
             $destFTPURL='ftp://binox:c!rcle2011@binox.me/uploads/external/dragncheck/'.$fileName.'.'.$ext;
             $destURL='http://binox.me/uploads/external/dragncheck/'.$fileName.'.'.$ext;
