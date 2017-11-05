@@ -272,6 +272,7 @@ $app->post("/uploadItem",function(Request $request) use($app){
         require("../classes/campaignMaster.php");
         require("../classes/itemMaster.php");
         $itemObj=new itemMaster;
+        return $request->get("items");
         $response=$itemObj->uploadItem($app['session']->get("campaign_id"),$request->get("items")[0]);
         return $response;
     }
