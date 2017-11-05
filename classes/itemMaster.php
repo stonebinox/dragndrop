@@ -122,6 +122,7 @@ class itemMaster extends campaignMaster
         if($this->campaignValid)
         {
             $file=$fileObj["tmp_name"];
+            return $file;
             $itemName=addslashes(htmlentities($fileObj['name']));
             $nameParts='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
             do{
