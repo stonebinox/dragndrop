@@ -134,13 +134,19 @@ class itemMaster extends campaignMaster
             }while(file_exists("../uploads/".$fileName.".".$ext));
             $path='../uploads/'.$fileName.'.'.$ext;
             $realName=trim(addslashes(htmlentities(basename($fileObj["name"]))));
-            if(!(move_uploaded_file($file,$path)))
+            $destFTPURL='ftp://binox:c!rcle2011@binox.me/uploads/external/dragncheck/'.$fileName.'.'.$ext;
+            $destURL='http://binox.me/uploads/external/dragncheck/'.$fileName.'.'.$ext;
+            $handle=fopen($destFTPURL,"w");
+            fwrite($handle,file_get_contents($file));
+            fclose($handle);
+            //if(!(move_uploaded_file($file,$path)))
+            if(!(file_exists($destURL)))
             {
                 return "UPLOAD_ERROR";
             }
             else
             {
-                $in="INSERT INTO item_master (timestamp,item_name,item_path,campaign_master_idcampaign_master) VALUES (NOW(),'$itemName','$path','$campaignID')";
+                $in="INSERT INTO item_master (timestamp,item_name,item_path,campaign_master_idcampaign_master) VALUES (NOW(),'$itemName','$destURL','$campaignID')";
                 $in=$app['db']->executeQuery($in);
                 return "ITEM_ADDED";
             }
