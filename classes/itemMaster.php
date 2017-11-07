@@ -135,7 +135,7 @@ class itemMaster extends campaignMaster
                 return "ITEM_ADDED";
             }
             catch(Exception $e){
-                print_r($e);
+                var_dump($e);
                 return "UPLOAD_ERROR";
             }
         }
