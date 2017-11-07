@@ -236,7 +236,7 @@ app.controller('dd', function($scope,$compile){
         var item=$scope.itemList[pos];
         var file=item[0];
         var formdata=new FormData();
-        formdata.append("items[]",file);
+        formdata.append("items",file);
         if(validate(file)){
             $.ajax({
                 xhr: function() {
