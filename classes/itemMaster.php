@@ -123,20 +123,28 @@ class itemMaster extends campaignMaster
         {
             $app=$this->app;
             $s3=$GLOBALS['s3'];
-            $bucket=$GLOBALS['bucket'];
+            $bucket=$GLOBALS["bucket"];
             //$file=$fileObj["tmp_name"];
             $file=$fileObj->getRealPath();
             $itemName=addslashes(htmlentities($fileObj->getClientOriginalName()));
             try{
-                $upload = $s3->upload($bucket, $itemName, fopen($fileObj->getRealPath(), 'rb'), 'public-read');
-                $path=$upload->get('ObjectURL');
-                $in="INSERT INTO item_master (timestamp,item_name,item_path,campaign_master_idcampaign_master) VALUES (NOW(),'$itemName','$path','$campaignID')";
-                $in=$app['db']->executeQuery($in);
-                return "ITEM_ADDED";
+                //Create a S3Client
+                $s3Client = new S3Client([
+                    'region' => 'us-west-2',
+                    'version' => '2006-03-01'
+                ]);
+                $result = $s3Client->putObject([
+                    'Bucket'     => $bucket,
+                    'Key'        => $itemName,
+                    'SourceFile' => $file,
+                ]);
+            } catch (S3Exception $e) {
+                return $e->getMessage();
             }
-            catch(Exception $e){
-                return "UPLOAD_ERROR_".$e;
-            }
+            $path=$result->get('ObjectURL');
+            $in="INSERT INTO item_master (timestamp,item_name,item_path,campaign_master_idcampaign_master) VALUES (NOW(),'$itemName','$path','$campaignID')";
+            $in=$app['db']->executeQuery($in);
+            return "ITEM_ADDED";
         }
         else
         {
