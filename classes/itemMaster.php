@@ -123,33 +123,15 @@ class itemMaster extends campaignMaster
         {
             $file=$fileObj["tmp_name"];
             $itemName=addslashes(htmlentities($fileObj['name']));
-            $nameParts='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-            do{
-                $fileName='';
-                for($i=0;$i<strlen($itemName);$i++)
-                {
-                    $randomCharacter=$nameParts[rand(0,strlen($nameParts)-1)];
-                    $fileName.=$randomCharacter;
-                }
-            }while(file_exists("../uploads/".$fileName.".".$ext));
-            $path='../uploads/'.$fileName.'.'.$ext;
-            return $path;
-            $realName=trim(addslashes(htmlentities(basename($fileObj["name"]))));
-            //$destFTPURL='ftp://binox:c!rcle2011@binox.me/uploads/external/dragncheck/'.$fileName.'.'.$ext;
-            //$destURL='http://binox.me/uploads/external/dragncheck/'.$fileName.'.'.$ext;
-            //$handle=fopen($destFTPURL,"w");
-            //fwrite($handle,file_get_contents($file));
-            //fclose($handle);
-            if(!(move_uploaded_file($file,$path)))
-            //if(!(file_exists($destURL)))
-            {
-                return "UPLOAD_ERROR";
-            }
-            else
-            {
+            try{
+                $upload = $s3->upload($bucket, $itemName, fopen($file, 'rb'), 'public-read');
+                $path=$upload->get('ObjectURL');
                 $in="INSERT INTO item_master (timestamp,item_name,item_path,campaign_master_idcampaign_master) VALUES (NOW(),'$itemName','$path','$campaignID')";
                 $in=$app['db']->executeQuery($in);
                 return "ITEM_ADDED";
+            }
+            catch(Exception $e){
+                return "UPLOAD_ERROR";
             }
         }
         else

@@ -13,6 +13,8 @@ $app['debug']=true;
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/views',
 ));
+$s3 = Aws\S3\S3Client::factory();
+$bucket = getenv('S3_BUCKET')?: die('No "S3_BUCKET" config var in found in env!');
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     'db.options' => array(
       'driver' => 'pdo_mysql',
@@ -262,7 +264,8 @@ $app->get("/campaignView",function() use($app){
     else
     {
         return $app->redirect("/login");
-    }
+    } //AKIAI5IYY7ZOEO5MCS5A
+    //b3UYBKS3i2IU9ceBVyJ3Fxm0WG0oOHLlujJzo28D
 });
 $app->post("/uploadItem",function(Request $request) use($app){
     if(($app['session']->get("uid"))&&($app['session']->get("brand_id"))&&($app['session']->get("campaign_id"))&&($request->get("items")))
@@ -272,7 +275,6 @@ $app->post("/uploadItem",function(Request $request) use($app){
         require("../classes/campaignMaster.php");
         require("../classes/itemMaster.php");
         $itemObj=new itemMaster;
-        return var_dump($request);
         $response=$itemObj->uploadItem($app['session']->get("campaign_id"),$request->get("items")[0]);
         return $response;
     }
