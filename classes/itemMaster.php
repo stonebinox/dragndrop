@@ -123,6 +123,7 @@ class itemMaster extends campaignMaster
         {
             $app=$this->app;
             $s3=$GLOBALS['s3'];
+            $bucket=$GLOBALS['bucket'];
             //$file=$fileObj["tmp_name"];
             $file=$fileObj->getRealPath();
             $itemName=addslashes(htmlentities($fileObj->getClientOriginalName()));
@@ -134,7 +135,7 @@ class itemMaster extends campaignMaster
                 return "ITEM_ADDED";
             }
             catch(Exception $e){
-                return $e;
+                return "UPLOAD_ERROR";
             }
         }
         else
