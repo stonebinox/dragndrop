@@ -268,7 +268,7 @@ $app->get("/campaignView",function() use($app){
     //b3UYBKS3i2IU9ceBVyJ3Fxm0WG0oOHLlujJzo28D
 });
 $app->post("/uploadItem",function(Request $request) use($app){
-    var_dump($request->files->get("items")[0]);
+    var_dump($request->files->get("items")[0]->error);
     if(($app['session']->get("uid"))&&($app['session']->get("brand_id"))&&($app['session']->get("campaign_id"))&&($request->get("items")))
     {
         require("../classes/userMaster.php");
