@@ -23,7 +23,7 @@
         "symfony/twig-bridge": "~2.8|^3.0",
         "symfony/validator": "~2.8|^3.0",
         "doctrine/dbal": "~2.2",
-        "aws/aws-sdk-php": "~2.6"
+        "aws/aws-sdk-php": "^3.37"
     },
     "autoload": {
         "psr-0": { "": "src/" }
