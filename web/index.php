@@ -27,6 +27,10 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
       'host'=> "us-cdbr-iron-east-05.cleardb.net",
     )
 ));
+$s3Client = new S3Client([
+    'region' => 'us-west-2',
+    'version' => '2006-03-01'
+]);
 $app->register(new Silex\Provider\SessionServiceProvider, array(
     'session.storage.save_path' => dirname(__DIR__) . '/tmp/sessions'
 ));

@@ -117,7 +117,7 @@ class itemMaster extends campaignMaster
     }
     function uploadItem($campaignID,$fileObj)
     {
-        var_dump($fileObj);
+        $s3Client=$GLOBALS['s3Client'];
         $campaignID=addslashes(htmlentities($campaignID));
         campaignMaster::__construct($campaignID);
         if($this->campaignValid)
@@ -130,10 +130,6 @@ class itemMaster extends campaignMaster
             $itemName=addslashes(htmlentities($fileObj->getClientOriginalName()));
             try{
                 //Create a S3Client
-                $s3Client = new S3Client([
-                    'region' => 'us-west-2',
-                    'version' => '2006-03-01'
-                ]);
                 $result = $s3Client->putObject([
                     'Bucket'     => "dragndrop",
                     'Key'        => $itemName,
