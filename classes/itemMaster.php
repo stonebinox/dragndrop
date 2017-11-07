@@ -117,6 +117,7 @@ class itemMaster extends campaignMaster
     }
     function uploadItem($campaignID,$fileObj)
     {
+        var_dump($fileObj);
         $campaignID=addslashes(htmlentities($campaignID));
         campaignMaster::__construct($campaignID);
         if($this->campaignValid)
