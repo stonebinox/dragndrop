@@ -278,7 +278,7 @@ $app->post("/uploadItem",function(Request $request) use($app){
         require("../classes/campaignMaster.php");
         require("../classes/itemMaster.php");
         $itemObj=new itemMaster;
-        $response=$itemObj->uploadItem($app['session']->get("campaign_id"),$request->files->get("items")[0]);
+        $response=$itemObj->uploadItem($app['session']->get("campaign_id"),$request->files->get("items"));
         return $response;
     }
     else
