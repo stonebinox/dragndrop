@@ -268,7 +268,7 @@ $app->get("/campaignView",function() use($app){
     //b3UYBKS3i2IU9ceBVyJ3Fxm0WG0oOHLlujJzo28D
 });
 $app->post("/uploadItem",function(Request $request) use($app){
-    var_dump($request->files->get("items"));
+    var_dump($request->files->get("items")[0]->getClientOriginalName());
     if(($app['session']->get("uid"))&&($app['session']->get("brand_id"))&&($app['session']->get("campaign_id"))&&($request->get("items")))
     {
         require("../classes/userMaster.php");
@@ -276,7 +276,7 @@ $app->post("/uploadItem",function(Request $request) use($app){
         require("../classes/campaignMaster.php");
         require("../classes/itemMaster.php");
         $itemObj=new itemMaster;
-        $response=$itemObj->uploadItem($app['session']->get("campaign_id"),$request->get("items")[0]);
+        $response=$itemObj->uploadItem($app['session']->get("campaign_id"),$request->files->get("items")[0]);
         return $response;
     }
     else

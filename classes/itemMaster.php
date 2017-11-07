@@ -121,7 +121,8 @@ class itemMaster extends campaignMaster
         campaignMaster::__construct($campaignID);
         if($this->campaignValid)
         {
-            $file=$fileObj["tmp_name"];
+            //$file=$fileObj["tmp_name"];
+            $file=$fileObj->getRealPath();
             $itemName=addslashes(htmlentities($fileObj['name']));
             try{
                 $upload = $s3->upload($bucket, $itemName, fopen($file, 'rb'), 'public-read');
