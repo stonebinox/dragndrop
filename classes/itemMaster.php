@@ -122,8 +122,8 @@ class itemMaster extends campaignMaster
         if($this->campaignValid)
         {
             $app=$this->app;
-            $s3=$GLOBALS['s3'];
-            $bucket=$GLOBALS["bucket"];
+            /*$s3=$GLOBALS['s3'];
+            $bucket=$GLOBALS["bucket"];*/
             //$file=$fileObj["tmp_name"];
             $file=$fileObj->getRealPath();
             $itemName=addslashes(htmlentities($fileObj->getClientOriginalName()));
@@ -134,7 +134,7 @@ class itemMaster extends campaignMaster
                     'version' => '2006-03-01'
                 ]);
                 $result = $s3Client->putObject([
-                    'Bucket'     => $bucket,
+                    'Bucket'     => "dragndrop",
                     'Key'        => $itemName,
                     'SourceFile' => $file,
                 ]);
