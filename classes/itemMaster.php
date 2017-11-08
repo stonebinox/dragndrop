@@ -131,7 +131,7 @@ class itemMaster extends campaignMaster
             try{
                 //Create a S3Client
                 $result = $s3Client->putObject([
-                    'Bucket'     => "dragndrop",
+                    'Bucket'     => "dragncheck",
                     'Key'        => $itemName,
                     'SourceFile' => $file,
                 ]);

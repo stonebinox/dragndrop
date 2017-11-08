@@ -28,7 +28,7 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     )
 ));
 $s3Client = new S3Client([
-    'region' => 'us-east-1',
+    'region' => 'us-east-2',
     'version' => 'latest'
 ]);
 $app->register(new Silex\Provider\SessionServiceProvider, array(
