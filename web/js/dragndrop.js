@@ -327,10 +327,15 @@ app.controller('dd', function($scope,$compile,$http){
             timestamp=dateFormat(sp[0])+' at '+sp[1];
             var itemPath=item.item_path;
             var itemName=item.item_name;
-            table+='<tr><td><a href="'+itemPath+'" target="_blank">'+itemName+'</a></td><td>'+timestamp+'</td><td><button type="button "class="btn btn-danger btn-xs">Delete</button></tr>';
+            table+='<tr><td><a href="'+itemPath+'" target="_blank">'+itemName+'</a></td><td>'+timestamp+'</td><td><div class="btn-group"><button type="button" class="btn btn-info btn-xs" ng-click="showShare(\''+itemPath+'\')">Share</button><button type="button "class="btn btn-danger btn-xs">Delete</button></div></tr>';
         }
         table+='</tbody></table>';
         $("#pastitemlist").html(table);
+        $compile("#pastitemlist")($scope);
+    };
+    $scope.showShare=function(url){
+        var text='<div class="panel panel-default"><div class="panel-body">'+url+'</div></div>';
+        messageBox("Copy This URL",text);
     };
 });
 app.controller("brands",function($scope,$compile,$http){
