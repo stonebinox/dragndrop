@@ -135,7 +135,7 @@ class itemMaster extends campaignMaster
                     'Key'        => $itemName,
                     'SourceFile' => $file,
                 ]);
-            } catch (S3Exception $e) {
+            } catch (Exception $e) {
                 return $e->getMessage();
             }
             $path=$result->get('ObjectURL');
