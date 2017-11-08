@@ -273,6 +273,7 @@ app.controller('dd', function($scope,$compile,$http){
                         else if(response=="ITEM_ADDED")
                         {
                             $("#item"+pos).html('<p class="text-success">Uploaded</p>');
+                            $scope.getItems();
                         }
                         else{
                             messageBox("Upload Error","Something went wrong while uploading this file. Please try again later. This is the error we see: "+response);
