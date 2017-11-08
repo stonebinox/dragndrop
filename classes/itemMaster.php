@@ -123,14 +123,11 @@ class itemMaster extends campaignMaster
         if($this->campaignValid)
         {
             $app=$this->app;
-            /*$s3=$GLOBALS['s3'];
-            $bucket=$GLOBALS["bucket"];*/
-            //$file=$fileObj["tmp_name"];
             $file=$fileObj->getRealPath();
             $itemName=addslashes(htmlentities($fileObj->getClientOriginalName()));
             try{
-                //Create a S3Client
                 $result = $s3Client->putObject([
+                    'ACL'        => 'public-read',
                     'Bucket'     => "dragncheck",
                     'Key'        => $itemName,
                     'SourceFile' => $file,

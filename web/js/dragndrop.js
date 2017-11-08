@@ -322,6 +322,8 @@ app.controller('dd', function($scope,$compile,$http){
             var item=pastItems[i];
             var itemID=item.iditem_master;
             var timestamp=item.timestamp;
+            var sp=timestamp.split(" ");
+            timestamp=dateFormat(sp[0])+' at '+sp[1];
             var itemPath=item.item_path;
             var itemName=item.item_name;
             table+='<tr><td><a href="'+itemPath+'" target="_blank">'+itemName+'</a></td><td>'+timestamp+'</td><td><button type="button "class="btn btn-danger btn-xs">Delete</button></tr>';
