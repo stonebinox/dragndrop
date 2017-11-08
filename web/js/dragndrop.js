@@ -9,7 +9,7 @@ function drop(e){
     angular.element(document.getElementById('filepicker')).scope().drop(e);
 }
 var app=angular.module("dragndrop",[]);
-app.controller('dd', function($scope,$compile){
+app.controller('dd', function($scope,$compile,$http){
     $scope.itemList=[];
     $scope.pastItemList=[];
     $scope.drop=function(e){
