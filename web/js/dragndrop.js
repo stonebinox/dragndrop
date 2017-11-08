@@ -318,9 +318,10 @@ app.controller('dd', function($scope,$compile,$http){
     $scope.displayPastItems=function(){
         var table='<strong>Past Uploaded Items</strong><br><table class="table"><thead><tr><th>Name</th><th>Uploaded on</th><th>Actions</th></tr></thead><tbody>';
         var pastItems=$scope.displayPastItems;
+        console.log(pastItems);
         for(var i=0;i<pastItems.length;i++){
             var item=pastItems[i];
-            var itemID=item.iditem_maste;
+            var itemID=item.iditem_master;
             var timestamp=item.timestamp;
             var itemPath=item.item_path;
             var itemName=item.item_name;
