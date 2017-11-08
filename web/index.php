@@ -290,5 +290,29 @@ $app->post("/uploadItem",function(Request $request) use($app){
         return "INVALID_PARAMETERS";
     }
 });
+$app->get("/getItems",function() use($app){
+    if(($app['session']->get("uid"))&&($app['session']->get("brand_id"))&&($app['session']->get("campaign_id")))
+    {
+        require("../classes/userMaster.php");
+        require("../classes/brandMaster.php");
+        require("../classes/campaignMaster.php");
+        require("../classes/itemMaster.php");
+        $itemObj=new itemMaster;
+        $campaignID=$app['session']->get("campaign_id");
+        $items=$itemObj->getItems($campaignID);
+        if(is_array($items))
+        {
+            return json_encode($items);
+        }
+        else
+        {
+            return $items;
+        }
+    }
+    else
+    {
+        return "INVALID_PARAMETERS";
+    }
+});
 $app->run();
 ?>

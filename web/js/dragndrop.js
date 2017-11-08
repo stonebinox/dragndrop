@@ -11,6 +11,7 @@ function drop(e){
 var app=angular.module("dragndrop",[]);
 app.controller('dd', function($scope,$compile){
     $scope.itemList=[];
+    $scope.pastItemList=[];
     $scope.drop=function(e){
         var data=e.dataTransfer.files;
         $scope.verifyFile(data);
@@ -210,7 +211,7 @@ app.controller('dd', function($scope,$compile){
     $scope.displayItemList=function(){
         if($scope.itemList.length!=0){
             var items=$scope.itemList.slice();
-            var table='<table class="table"><thead><tr><th>File name</th><th>File size</th><th>Actions</th></tr></thead><tbody>';
+            var table='<strong>Current list</strong><br><table class="table"><thead><tr><th>File name</th><th>File size</th><th>Actions</th></tr></thead><tbody>';
             for(var i=0;i<items.length;i++){
                 var item=items[i];
                 var properties=item[1];
@@ -286,10 +287,47 @@ app.controller('dd', function($scope,$compile){
                     messageBox("Network Error","Something went wrong while uploading this file. Please try again later.");
                 },
                 beforeSend:function(){
-                    $("#item"+pos).html('<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="0"                    aria-valuemin="0" aria-valuemax="100" style="width:0%" id="progress'+pos+'"></div></div>');
+                    $("#item"+pos).html('<div class="progress"><div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%" id="progress'+pos+'"></div></div>');
                 }
             });
         }
+    };
+    $scope.getItems=function(){
+        $http.get("getItems")
+        .then(function success(response){
+            response=response.data;
+            if(typeof response=="object"){
+                $scope.pastItemList=response;
+                $scope.displayPastItems();
+            }
+            else{
+                response=$.trim(response);
+                switch(response){
+                    case "INVALID_PARAMETERS":
+                    default:
+                    messageBox("Problem","Something went wrong while loading past uploaded items. Please try again later.");
+                    break;
+                }
+            }
+        },
+        function error(response){
+            console.log(response);
+            messageBox("Problem","Something went wrong while loading past uploaded items. Please try again later.");
+        });
+    };
+    $scope.displayPastItems=function(){
+        var table='<strong>Past Uploaded Items</strong><br><table class="table"><thead><tr><th>Name</th><th>Uploaded on</th><th>Actions</th></tr></thead><tbody>';
+        var pastItems=$scope.displayPastItems;
+        for(var i=0;i<pastItem.length;i++){
+            var item=pastItems[i];
+            var itemID=item.iditem_maste;
+            var timestamp=item.timestamp;
+            var itemPath=item.item_path;
+            var itemName=item.item_name;
+            table+='<tr><td><a href="'+itemPath+'" target="_blank">'+itemName+'</a></td><td>'+timestamp+'</td><td><button type="button "class="btn btn-danger btn-xs">Delete</button></tr>';
+        }
+        table+='</tbody></table>';
+        $("#pastitemlist").html(table);
     };
 });
 app.controller("brands",function($scope,$compile,$http){
