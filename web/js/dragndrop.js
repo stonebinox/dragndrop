@@ -73,7 +73,7 @@ app.controller('dd', function($scope,$compile,$http){
                                 .attr('src', e.target.result)
                                 .addClass("img-responsive")
                                 .css("width","60%");
-                            $scope.renderProperties(properties);
+                            //$scope.renderProperties(properties);
                         };
                         reader.readAsDataURL(file);
                     }
