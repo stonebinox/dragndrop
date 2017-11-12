@@ -65,10 +65,15 @@ app.controller('dd', function($scope,$compile,$http){
                         $("#filedetails").html(thumbnail);
                         var reader = new FileReader();
                         reader.onload = function (e) {
+                            var width=$("#imgprev").naturalWidth;
+                            var height=$("#imgprev").naturalHeight;
+                            var prop=["Width X Height",width+'x'+height+' px'];
+                            properties.push(prop);
                             $('#imgprev')
                                 .attr('src', e.target.result)
                                 .addClass("img-responsive")
                                 .css("width","60%");
+                            $scope.renderProperties();
                         };
                         reader.readAsDataURL(file);
                     }
@@ -127,6 +132,10 @@ app.controller('dd', function($scope,$compile,$http){
                                 var min=parseInt(duration/60);
                                 var sec=parseInt(duration%60);
                                 var prop=["Duration",min+":"+sec];
+                                properties.push(prop);
+                                var width=$("#videoplayer").videoWidth;
+                                var height=$("#videoplayer").videoHeight;
+                                prop=["Width X Height", width+'x'+height+' px'];
                                 properties.push(prop);
                                 $scope.renderProperties(properties);
                             });
