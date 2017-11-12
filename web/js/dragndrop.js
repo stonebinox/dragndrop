@@ -133,13 +133,13 @@ app.controller('dd', function($scope,$compile,$http){
                                 var sec=parseInt(duration%60);
                                 var prop=["Duration",min+":"+sec];
                                 properties.push(prop);
-                                setTimeout(function(){
+                                document.getElementById("videoplayer").addEventListener( "loadedmetadata", function (e) {
                                     var width=document.getElementById("videoplayer").videoWidth;
                                     var height=document.getElementById("videoplayer").videoHeight;
                                     prop=["Width X Height", width+'x'+height+' px'];
                                     properties.push(prop);
                                     $scope.renderProperties(properties);
-                                },2000);
+                                }, false );
                             });
                         };
                         reader.readAsDataURL(file);
