@@ -4,8 +4,8 @@
 <div class="container">
 <div style="background:url(images/dragcheck.png) no-repeat center;-webkit-background-size:contain;-moz-background-size:contain;background-size:contain;width:100%;height:100px;"></div>
 <hr>
-  <!--<form name="login" method="post" action="login_action" autocomplete="off">
-      <h1>Log in to your account</h1>
+  <form name="login" method="post" action="googleLogin" autocomplete="off" id="glogin">
+      <!--<h1>Log in to your account</h1>
       <div class="form-group" id="uemail">
           <label for="email">Email</label>
           <input type="email" class="form-control" id="email" name="user_email" required placeholder="Enter a valid email ID">
@@ -14,8 +14,8 @@
           <label for="password">Password</label>
           <input type="password" class="form-control" id="user_password" name="user_password" required placeholder="Enter a your account password">
       </div>
-      <button type="submit" class="btn btn-primary" id="loginbutton">Log In</button>&nbsp;&nbsp;<button type="button" class="btn btn-default" onclick="window.location='registration';">Create an account</button>
-  </form>-->
+      <button type="submit" class="btn btn-primary" id="loginbutton">Log In</button>&nbsp;&nbsp;<button type="button" class="btn btn-default" onclick="window.location='registration';">Create an account</button>-->
+  </form>
     <div class="well">
         <div class="text-center">
             <div class="g-signin2" data-onsuccess="onSignIn"></div>
@@ -25,7 +25,6 @@
   <!--
   //$("#email").focus();
   function onSignIn(googleUser) {
-        // Useful data for your client-side scripts:
         var profile = googleUser.getBasicProfile();
         console.log("ID: " + profile.getId()); // Don't send this directly to your server!
         console.log('Full Name: ' + profile.getName());
@@ -34,9 +33,10 @@
         console.log("Image URL: " + profile.getImageUrl());
         console.log("Email: " + profile.getEmail());
 
-        // The ID token you need to pass to your backend:
         var id_token = googleUser.getAuthResponse().id_token;
         console.log("ID Token: " + id_token);
+        $("#glogin").append('<input type="hidden" name="id_token" value="'+id_token+'">');
+        document.getElementById("glogin").submit();
       };
   //-->
   </script>

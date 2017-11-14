@@ -105,6 +105,16 @@ $app->post("/login_action",function(Request $request) use($app){
         return $app->redirect("/login");
     }
 });
+$app->post("/googleLogin",function(Response $response) use($app){
+    if($response->get("id_token"))
+    {
+        return $response->get("id_token");
+    }
+    else
+    {
+        return $app->redirect("/login");
+    }
+});
 $app->get("logout",function() use($app){
     if($app['session']->get("uid")){
         require("../classes/userMaster.php");
