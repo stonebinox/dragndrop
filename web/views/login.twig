@@ -23,7 +23,16 @@
     </div>
   <script type="text/javascript">
   <!--
-  $("#email").focus();
+  //$("#email").focus();
+  gapi.auth2.init({
+      client_id: "264866893774-9gdp0vqgjjqdde7vpktp7gl6tbl2cu1k.apps.googleusercontent.com"
+  })
+  .then(function onInit(auth){
+      console.log(auth);
+  },
+    function onError(response){
+        console.log(auth);
+    });
   //-->
   </script>
 </div>
