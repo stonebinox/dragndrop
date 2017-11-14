@@ -398,6 +398,10 @@ app.controller("brands",function($scope,$compile,$http){
     $scope.logout=function(){
         $scope.brand_id=null;
         $scope.brandArray=[];
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+          console.log('User signed out.');
+        });
         window.location='logout';
     };
     $scope.addBrand=function(){
