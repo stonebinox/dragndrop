@@ -105,10 +105,10 @@ $app->post("/login_action",function(Request $request) use($app){
         return $app->redirect("/login");
     }
 });
-$app->post("/googleLogin",function(Response $response) use($app){
-    if($response->get("id_token"))
+$app->post("/googleLogin",function(Request $request) use($app){
+    if($request->get("id_token"))
     {
-        return $response->get("id_token");
+        return $request->get("id_token");
     }
     else
     {
