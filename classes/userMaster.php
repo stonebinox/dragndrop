@@ -190,5 +190,51 @@ class userMaster
             return "INVALID_USER_ID";
         }
     }
+    function createAccountWithGoogle($idToken,$email,$userName)
+    {
+        $app=$this->app;
+        $idToken=addslashes($idToken);
+        if(($idToken!="")&&($idToken!=NULL))
+        {
+            $email=trim(strtolower(addslashes(htmlentities($email))));
+            if(($email!="")&&($email!=NULL))
+            {
+                $userName=trim(ucwords(addslashes(htmlentities($userName))));
+                if(($userName!="")&&($userName!=NULL))
+                {
+                    $um="SELECT iduser_master FROM user_master WHERE user_email='$userEmail' AND stat='1'";
+                    $um=$app['db']->fetchAssoc($um);
+                    if(($um!="")&&($um!=NULL))
+                    {
+                        $userID=$um['iduser_master'];
+                        $up="UPDATE user_master SET online_flag='1' WHERE iduser_master='$userID'";
+                        $up=$app['db']->executeUpdate($up);
+                    }
+                    else
+                    {
+                        $in="INSERT INTO user_master (timestamp,user_email,user_name,id_token,online_flag) VALUES (NOW(),'$userEmail','$userName','$idToken','1')";
+                        $in=$app['db']->executeQuery($in);
+                        $um="SELECT iduser_master FROM user_master WHERE user_email='$userEmail'";
+                        $um=$app['db']->fetchAssoc($um);
+                        $userID=$um['iduser_master'];
+                    }
+                    $app['session']->set('uid',$userID);
+                    return "USER_AUTHENTICATED";
+                }
+                else
+                {
+                    return "INVALID_USER_NAME";
+                }
+            }
+            else
+            {
+                return "INVALID_USER_EMAIL";
+            }
+        }
+        else
+        {
+            return "INVALID_ID_TOKEN";
+        }
+    }
 }
 ?> 

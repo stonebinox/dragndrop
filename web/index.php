@@ -106,9 +106,18 @@ $app->post("/login_action",function(Request $request) use($app){
     }
 });
 $app->post("/googleLogin",function(Request $request) use($app){
-    if($request->get("id_token"))
+    if(($request->get("id_token"))&&($request->get("user_email"))&&($request->get("user_name")))
     {
-        return $request->get("id_token");
+        require("../classes/userMaster.php");
+        $user=new userMaster;
+        $response=$user->createAccountWithGoogle($request->get("id_token"),$request->get("user_email"),$request->get("user_name"));
+        if($response=="USER_AUTHENTICATED")
+        {
+            return $app->redirect("/dashboard");
+        }
+        else{
+            return $app->redirect("/login?err=1");
+        }
     }
     else
     {
