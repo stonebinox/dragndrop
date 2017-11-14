@@ -4,7 +4,7 @@
 <div class="container">
 <div style="background:url(images/dragcheck.png) no-repeat center;-webkit-background-size:contain;-moz-background-size:contain;background-size:contain;width:100%;height:100px;"></div>
 <hr>
-  <form name="login" method="post" action="login_action" autocomplete="off">
+  <!--<form name="login" method="post" action="login_action" autocomplete="off">
       <h1>Log in to your account</h1>
       <div class="form-group" id="uemail">
           <label for="email">Email</label>
@@ -15,7 +15,8 @@
           <input type="password" class="form-control" id="user_password" name="user_password" required placeholder="Enter a your account password">
       </div>
       <button type="submit" class="btn btn-primary" id="loginbutton">Log In</button>&nbsp;&nbsp;<button type="button" class="btn btn-default" onclick="window.location='registration';">Create an account</button>
-  </form>
+  </form>-->
+  <div class="g-signin2" data-onsuccess="onSignIn"></div>
   <script type="text/javascript">
   <!--
   $("#email").focus();
