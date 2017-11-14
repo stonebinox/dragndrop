@@ -24,15 +24,20 @@
   <script type="text/javascript">
   <!--
   //$("#email").focus();
-  gapi.auth2.init({
-      client_id: "264866893774-9gdp0vqgjjqdde7vpktp7gl6tbl2cu1k.apps.googleusercontent.com"
-  })
-  .then(function onInit(auth){
-      console.log(auth);
-  },
-    function onError(response){
-        console.log(auth);
-    });
+  function onSignIn(googleUser) {
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+        console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+        console.log('Full Name: ' + profile.getName());
+        console.log('Given Name: ' + profile.getGivenName());
+        console.log('Family Name: ' + profile.getFamilyName());
+        console.log("Image URL: " + profile.getImageUrl());
+        console.log("Email: " + profile.getEmail());
+
+        // The ID token you need to pass to your backend:
+        var id_token = googleUser.getAuthResponse().id_token;
+        console.log("ID Token: " + id_token);
+      };
   //-->
   </script>
 </div>
