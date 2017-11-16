@@ -268,7 +268,7 @@ $app->post("/saveCampaign",function(Request $request) use($app){
         require("../classes/brandMaster.php");
         require("../classes/campaignMaster.php");
         $campaign=new campaignMaster;
-        $response=$campaign->addCampaign($request->get("campaign_name"),$request->get("campaign_desc"));
+        $response=$campaign->addCampaign($request->get("campaign_name"),$request->get("camp_desc"));
         return $response;
     }  
     else

@@ -386,7 +386,11 @@ app.controller("brands",function($scope,$compile,$http){
                 var brand=brands[i];
                 var brandID=brand.idbrand_master;
                 var brandName=stripslashes(brand.brand_name);
-                list+='<a href="brand/'+brandID+'" class="list-group-item" data-toggle="tooltip" title="Edit this brand" data-placement="auto">'+brandName+'</a>';
+                var description=stripslashes(brand.brand_description);
+                if(!(validate(description))){
+                    description='';
+                }
+                list+='<a href="brand/'+brandID+'" class="list-group-item" data-toggle="tooltip" title="Edit this brand" data-placement="auto">'+brandName+'&nbsp;<span class="text-info">'+description+'</span></a>';
             }
             list+='</div>';
             $("#brandholder").html(list);
@@ -526,7 +530,11 @@ app.controller("campaigns",function($scope,$compile,$http){
                 var campaign=campaigns[i];
                 var campaignID=campaign.idcampaign_master;
                 var campaignName=stripslashes(campaign.campaign_name);
-                list+='<li class="list-group-item"><a href="campaign/'+campaignID+'" data-toggle="tooltip" title="Edit this campaign" data-placement="auto">'+campaignName+'</a>&nbsp;&nbsp;<span class="glyphicon glyphicon-share"></span></li>';
+                var description=stripslashes(campaign.campaign_description);
+                if(!validate(description)){
+                    description='';
+                }
+                list+='<li class="list-group-item"><a href="campaign/'+campaignID+'" data-toggle="tooltip" title="Edit this campaign" data-placement="auto">'+campaignName+'&nbsp;<span class="text-info">'+description+'</span></a>&nbsp;&nbsp;<span class="glyphicon glyphicon-share"></span></li>';
             }
             list+='</ul>';
             $("#campaignholder").html(list);
