@@ -390,7 +390,7 @@ app.controller("brands",function($scope,$compile,$http){
                 if(!(validate(description))){
                     description='';
                 }
-                list+='<li class="list-group-item"><a href="brand/'+brandID+'" data-toggle="tooltip" title="Edit this brand" data-placement="auto">'+brandName+'</a>&nbsp;<span class="text-info">'+description+'</span></li>';
+                list+='<li class="list-group-item"><a href="brand/'+brandID+'" data-toggle="tooltip" title="Edit this brand" data-placement="auto">'+brandName+'</a>&nbsp;<span class="small text-info">'+description+'</span></li>';
             }
             list+='</ul>';
             $("#brandholder").html(list);
@@ -534,7 +534,7 @@ app.controller("campaigns",function($scope,$compile,$http){
                 if(!validate(description)){
                     description='';
                 }
-                list+='<li class="list-group-item"><a href="campaign/'+campaignID+'" data-toggle="tooltip" title="Edit this campaign" data-placement="auto">'+campaignName+'&nbsp;<span class="text-info">'+description+'</span></a>&nbsp;&nbsp;<span class="glyphicon glyphicon-share"></span></li>';
+                list+='<li class="list-group-item"><a href="campaign/'+campaignID+'" data-toggle="tooltip" title="Edit this campaign" data-placement="auto">'+campaignName+'&nbsp;<span class="small text-info">'+description+'</span></a>&nbsp;&nbsp;<span class="glyphicon glyphicon-share"></span></li>';
             }
             list+='</ul>';
             $("#campaignholder").html(list);
