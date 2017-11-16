@@ -526,7 +526,7 @@ app.controller("campaigns",function($scope,$compile,$http){
                 var campaign=campaigns[i];
                 var campaignID=campaign.idcampaign_master;
                 var campaignName=stripslashes(campaign.campaign_name);
-                list+='<a href="campaign/'+campaignID+'" class="list-group-item" data-toggle="tooltip" title="Edit this campaign" data-placement="auto">'+campaignName+'</a>';
+                list+='<a href="campaign/'+campaignID+'" class="list-group-item" data-toggle="tooltip" title="Edit this campaign" data-placement="auto">'+campaignName+'</a>&nbsp;&nbsp;<span class="glyphicon glyphicon-share"></span>';
             }
             list+='</div>';
             $("#campaignholder").html(list);
