@@ -13,8 +13,8 @@
     </div>
   </div>
   <hr>
-  <div class="panel panel-default" ng-init="getSharedCampaigns()">
-    <div class="panel-heading"><strong>Campaigns</strong></div>
+  <div class="panel panel-default" ng-init="getSharedCampaigns();shareCount=0;">
+    <div class="panel-heading"><strong>Campaigns shared with you ({{shareCount}})</strong></div>
     <div class="panel-body" id="campaignholder"></div>
   </div>
 </div>

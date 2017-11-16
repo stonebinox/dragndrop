@@ -686,6 +686,7 @@ app.controller("agents",function($scope,$compile,$http){
     $scope.displaySharedCampaigns=function(){
         var sharedCampaigns=$scope.shareArray;
         var list='<ul class="list-group">';
+        $scope.shareCount=sharedCampaigns.length;
         for(var i=0;i<sharedCampaigns.length;i++){
             var share=sharedCampaigns[i];
             var shareID=share.idshare_master;
