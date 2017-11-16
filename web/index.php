@@ -113,7 +113,7 @@ $app->post("/googleLogin",function(Request $request) use($app){
         require("../classes/adminMaster.php");
         require("../classes/userMaster.php");
         $user=new userMaster;
-        if(($request->get("creative_user")=="true")||($request->get("creative_user")==true))
+        if($request->get("creative_user")=="true")
         {
             $creativeUser=11;
         }

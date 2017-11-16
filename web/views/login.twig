@@ -40,6 +40,12 @@
         var userName=profile.getName();
         var email=profile.getEmail();
         var id_token = googleUser.getAuthResponse().id_token;
+        if(creativeUser){
+            creativeUser="true";
+        }
+        else{
+            creativeUser="false";
+        }
         $("#glogin").append('<input type="hidden" name="id_token" value="'+id_token+'"><input type="hidden" name="user_email" value="'+email+'"><input type="hidden" name="user_name" value="'+userName+'"><input type="hidden" name="creative_user" value="'+creativeUser+'">');
         document.getElementById("glogin").submit();
       };
