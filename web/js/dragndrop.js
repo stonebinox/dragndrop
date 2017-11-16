@@ -521,14 +521,14 @@ app.controller("campaigns",function($scope,$compile,$http){
     $scope.displayCampaigns=function(){
         if(validate($scope.campaignArray)){
             var campaigns=$scope.campaignArray;
-            var list='<div class="list-group">';
+            var list='<ul class="list-group">';
             for(var i=0;i<campaigns.length;i++){
                 var campaign=campaigns[i];
                 var campaignID=campaign.idcampaign_master;
                 var campaignName=stripslashes(campaign.campaign_name);
-                list+='<a href="campaign/'+campaignID+'" class="list-group-item" data-toggle="tooltip" title="Edit this campaign" data-placement="auto">'+campaignName+'</a>&nbsp;&nbsp;<span class="glyphicon glyphicon-share"></span>';
+                list+='<li class="list-group-item"><a href="campaign/'+campaignID+'" data-toggle="tooltip" title="Edit this campaign" data-placement="auto">'+campaignName+'</a>&nbsp;&nbsp;<span class="glyphicon glyphicon-share"></span></li>';
             }
-            list+='</div>';
+            list+='</ul>';
             $("#campaignholder").html(list);
             $('[data-toggle="tooltip"]').tooltip({
                 trigger: "hover"
