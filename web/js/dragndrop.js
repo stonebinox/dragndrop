@@ -9,6 +9,9 @@ function drop(e){
     angular.element(document.getElementById('filepicker')).scope().drop(e);
 }
 var app=angular.module("dragndrop",[]);
+app.config(function($interpolateProvider){
+    $interpolateProvider.startSymbol('{[{').endSymbol('}]}');
+});
 app.controller('dd', function($scope,$compile,$http){
     $scope.itemList=[];
     $scope.pastItemList=[];

@@ -2,7 +2,7 @@
 {% block content %}
 <body ng-app="dragndrop">
 <div class="container" ng-controller="agents">
-<div style="background:url(images/dragcheck.png) no-repeat center;-webkit-background-size:contain;-moz-background-size:contain;background-size:contain;width:100%;height:80px;"></div>
+<div style="background:url(//dusthq-dragncheck.herokuapp.com/images/dragcheck.png) no-repeat center;-webkit-background-size:contain;-moz-background-size:contain;background-size:contain;width:100%;height:80px;"></div>
 <hr>
   <div class="row">
     <div class="col-sm-9">
@@ -14,7 +14,7 @@
   </div>
   <hr>
   <div class="panel panel-default" ng-init="getItems();itemCount=0;">
-    <div class="panel-heading"><strong>Files (0)</strong></div>
+    <div class="panel-heading"><strong>Files ({[{itemCount}]})</strong></div>
     <div class="panel-body" id="itemholder"></div>
   </div>
 </div>
