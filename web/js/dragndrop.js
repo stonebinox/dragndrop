@@ -603,7 +603,7 @@ app.controller("campaigns",function($scope,$compile,$http){
         }
     };
     $scope.showShareForm=function(campaignID){
-        var text='<form><div class="form-group"><label for="email">Email ID</label><input type="email" name="email" id="email" required placeholder="Enter a valid email ID" class="form-control"></div><button type="button" class="btn btn-primary">Share</button></form>';
+        var text='<p>You can share this campaign for a creative agent to review the files uploaded. Please ensure that the email ID you enter has already signed up as a creative agent.</p><hr><form><div class="form-group"><label for="email">Email ID</label><input type="email" name="email" id="email" required placeholder="Enter a valid email ID" class="form-control"></div><button type="button" class="btn btn-primary">Share</button></form>';
         messageBox("Share Campaign",text);
         $compile("#myModal")($scope);
     };
