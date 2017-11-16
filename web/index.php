@@ -124,7 +124,10 @@ $app->post("/googleLogin",function(Request $request) use($app){
         $response=$user->createAccountWithGoogle($request->get("id_token"),$request->get("user_email"),$request->get("user_name"),$creativeUser);
         if($response=="USER_AUTHENTICATED")
         {
-            if($creativeUser==1)
+            $userID=$user->getUserIDFromEmail($request->get("user_email"));
+            $user=new userMaster($userID);
+            $adminID=$user->getAdminType();
+            if($adminID==1)
             {
                 return $app->redirect("/dashboard");
             }
