@@ -228,9 +228,9 @@ class userMaster extends adminMaster
                     }
                     else
                     {
-                        $in="INSERT INTO user_master (timestamp,user_email,user_name,google_id_token,online_flag,admin_master_idadmin_master) VALUES (NOW(),'$userEmail','$userName','$idToken','1','$adminID')";
+                        $in="INSERT INTO user_master (timestamp,user_email,user_name,google_id_token,online_flag,admin_master_idadmin_master) VALUES (NOW(),'$email','$userName','$idToken','1','$adminID')";
                         $in=$app['db']->executeQuery($in);
-                        $um="SELECT iduser_master FROM user_master WHERE user_email='$userEmail'";
+                        $um="SELECT iduser_master FROM user_master WHERE user_email='$userEmail' AND stat='1'";
                         $um=$app['db']->fetchAssoc($um);
                         $userID=$um['iduser_master'];
                     }
