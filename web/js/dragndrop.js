@@ -709,7 +709,7 @@ app.controller("agents",function($scope,$compile,$http){
     };
     $scope.itemList=[];
     $scope.getItems=function(){
-        $http.get("getItems")
+        $http.get("../getItems")
         .then(function success(response){
             response=response.data;
             if(typeof response=="object"){
