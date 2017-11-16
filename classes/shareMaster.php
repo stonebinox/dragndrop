@@ -106,7 +106,7 @@ class shareMaster extends itemMaster
         {
             $app=$this->app;
             $shareID=$this->share_id;
-            $sm="SELECT * FROM share_master WHREE idshare_master='$shareID'";
+            $sm="SELECT * FROM share_master WHERE idshare_master='$shareID'";
             $sm=$app['db']->fetchAssoc($sm);
             if(($sm!="")&&($sm!=NULL))
             {
