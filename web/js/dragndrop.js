@@ -684,6 +684,23 @@ app.controller("agents",function($scope,$compile,$http){
         });
     };
     $scope.displaySharedCampaigns=function(){
-        console.log($scope.shareArray);
+        var sharedCampaigns=$scope.shareAray;
+        var list='<ul class="list-group">';
+        for(var i=0;i<sharedCampaigns.length;i++){
+            var share=sharedCampaign[i];
+            var shareID=share.idshare_master;
+            var campaign=share.campaign_master_idcampaign_master;
+            var user=share.user_master_iduser_master;
+            var timestamp=share.timestamp;
+            var campaignName=stripslashes(campaign.campaign_name);
+            var campaignID=campaign.idcampaign_master;
+            var campaignDescription=stripslashes(campaign.campaign_description);
+            if(!validate(campaignDescription)){
+                campaignDescription='';
+            }
+            list+='<li class="list-group-item"><a href="#">'+campaignName+'</a>&nbsp;&bull;&nbsp;<span class="text-info small">'+campaignDescription+'</span></li>';
+        }
+        list+='</ul>';
+        $("#campaignholder").html(list);
     }
 });
