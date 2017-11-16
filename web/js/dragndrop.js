@@ -707,4 +707,44 @@ app.controller("agents",function($scope,$compile,$http){
         list+='</ul>';
         $("#campaignholder").html(list);
     };
+    $scope.itemList=[];
+    $scope.getItems=function(){
+        $http.get("getItems")
+        .then(function success(response){
+            response=response.data;
+            if(typeof response=="object"){
+                $scope.itemList=response;
+                $scope.displayItems();
+            }
+            else{
+                response=$.trim(response);
+                switch(response){
+                    case "INVALID_PARAMETERS":
+                    default:
+                    messageBox("Problem","Something went wrong while loading uploaded items. Please try again later.");
+                    break;
+                }
+            }
+        },
+        function error(response){
+            console.log(response);
+            messageBox("Problem","Something went wrong while loading uploaded items. Please try again later.");
+        });
+    };
+    $scope.displayItems=function(){
+        var table='<table class="table"><thead><tr><th>Name</th><th>Uploaded on</th><th>Actions</th></tr></thead><tbody>';
+        var pastItems=$scope.itemList;
+        for(var i=0;i<pastItems.length;i++){
+            var item=pastItems[i];
+            var itemID=item.iditem_master;
+            var timestamp=item.timestamp;
+            var sp=timestamp.split(" ");
+            timestamp=dateFormat(sp[0])+' at '+sp[1];
+            var itemPath=item.item_path;
+            var itemName=item.item_name;
+            table+='<tr><td><a href="'+itemPath+'" target="_blank">'+itemName+'</a></td><td>'+timestamp+'</td><td><div class="btn-group"><button type="button" class="btn btn-info btn-xs" ng-click="showShare(\''+itemPath+'\')">Share</button><button type="button "class="btn btn-danger btn-xs">Delete</button></div></tr>';
+        }
+        table+='</tbody></table>';
+        $("#itemlist").html(table);
+    };
 });
