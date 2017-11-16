@@ -385,7 +385,7 @@ $app->post("/uploadItem",function(Request $request) use($app){
     }
 });
 $app->get("/getItems",function() use($app){
-    if(($app['session']->get("uid"))&&($app['session']->get("brand_id"))&&($app['session']->get("campaign_id")))
+    if(($app['session']->get("uid"))&&($app['session']->get("campaign_id")))
     {
         require("../classes/adminMaster.php");
         require("../classes/userMaster.php");
