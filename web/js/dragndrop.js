@@ -737,6 +737,7 @@ app.controller("agents",function($scope,$compile,$http){
     $scope.displayItems=function(){
         var table='<table class="table"><thead><tr><th>Name</th><th>Uploaded on</th><th>Actions</th></tr></thead><tbody>';
         var pastItems=$scope.itemList;
+        $scope.itemCount=pastItems.length;
         for(var i=0;i<pastItems.length;i++){
             var item=pastItems[i];
             var itemID=item.iditem_master;
