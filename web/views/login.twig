@@ -14,11 +14,12 @@
             </div>
             <hr>
             <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            <hr>
+            <form name="login" method="post" action="googleLogin" autocomplete="off">
+                <div id="glogin"></div>
+                <button type="submit" class="btn btn-primary disabled" id="loginbutton">Log In</button>
+            </form>
         </div>
-        <form name="login" method="post" action="googleLogin" autocomplete="off">
-            <div id="glogin"></div>
-            <button type="submit" class="btn btn-primary disabled" id="loginbutton">Log In</button>
-        </form>
     </div>
   <script type="text/javascript">
   <!--
