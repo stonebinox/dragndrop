@@ -6,7 +6,7 @@ Last Modified: 22/10/17 18:41
 Comments: Main class file for user_master
 table.
 ----------------------------------------*/
-class userMaster
+class userMaster extends adminMaster
 {
     public $app=NULL;
     public $userValid=false;
@@ -26,11 +26,20 @@ class userMaster
         {
             $userID=$this->user_id;
             $app=$this->app;
-            $um="SELECT iduser_master FROM user_master WHERE stat='1' AND iduser_master='$userID'";
+            $um="SELECT admin_master_idadmin_master FROM user_master WHERE stat='1' AND iduser_master='$userID'";
             $um=$app['db']->fetchAssoc($um);
             if(($um!="")&&($um!=NULL))
             {
-                return true;
+                $adminId=$um['admin_master_idadmin_master'];
+                adminMaster::__construct($adminID);
+                if($this->adminValid)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
