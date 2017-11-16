@@ -206,7 +206,7 @@ class userMaster extends adminMaster
             return "INVALID_USER_ID";
         }
     }
-    function createAccountWithGoogle($idToken,$email,$userName,$adminID)
+    function createAccountWithGoogle($idToken,$email,$userName,$adminID=1)
     {
         $app=$this->app;
         $idToken=addslashes($idToken);
@@ -250,6 +250,28 @@ class userMaster extends adminMaster
         else
         {
             return "INVALID_ID_TOKEN";
+        }
+    }
+    function getAdminType()
+    {
+        $app=$this->app;
+        if($this->userValid)
+        {
+            $userID=$this->user_id;
+            $um="SELECT admin_master_idadmin_master FROM user_master WHERE iduser_master='$userID'";
+            $um=$app['db']->fetchAssoc($um);
+            if(($um!="")&&($um!=NULL))
+            {
+                return $um['admin_master_idadmin_master'];
+            }
+            else
+            {
+                return "INVALID_USER_ID";
+            }
+        }
+        else
+        {
+            return "INVALID_USER_ID";
         }
     }
 }
