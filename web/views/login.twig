@@ -4,18 +4,6 @@
 <div class="container">
 <div style="background:url(images/dragcheck.png) no-repeat center;-webkit-background-size:contain;-moz-background-size:contain;background-size:contain;width:100%;height:100px;"></div>
 <hr>
-  <form name="login" method="post" action="googleLogin" autocomplete="off" id="glogin">
-      <!--<h1>Log in to your account</h1>
-      <div class="form-group" id="uemail">
-          <label for="email">Email</label>
-          <input type="email" class="form-control" id="email" name="user_email" required placeholder="Enter a valid email ID">
-      </div>
-      <div class="form-group" id="upass">
-          <label for="password">Password</label>
-          <input type="password" class="form-control" id="user_password" name="user_password" required placeholder="Enter a your account password">
-      </div>
-      <button type="submit" class="btn btn-primary" id="loginbutton">Log In</button>&nbsp;&nbsp;<button type="button" class="btn btn-default" onclick="window.location='registration';">Create an account</button>-->
-  </form>
     <div class="well">
         <div class="text-left">
             <div class="checkbox">
@@ -28,6 +16,10 @@
             <div class="g-signin2" data-onsuccess="onSignIn"></div>
         </div>
     </div>
+    <form name="login" method="post" action="googleLogin" autocomplete="off">
+      <div id="glogin"></div>
+      <button type="submit" class="btn btn-primary disabled" id="loginbutton">Log In</button>
+    </form>
   <script type="text/javascript">
   <!--
   //$("#email").focus();
@@ -47,7 +39,8 @@
             creativeUser="false";
         }
         $("#glogin").append('<input type="hidden" name="id_token" value="'+id_token+'"><input type="hidden" name="user_email" value="'+email+'"><input type="hidden" name="user_name" value="'+userName+'"><input type="hidden" name="creative_user" value="'+creativeUser+'">');
-        document.getElementById("glogin").submit();
+        //document.getElementById("glogin").submit();
+        $("#loginbutton").removeClass("disabled");
       };
   //-->
   </script>
