@@ -61,6 +61,13 @@ class userMaster extends adminMaster
             $um=$app['db']->fetchAssoc($um);
             if(($um!="")&&($um!=NULL))
             {
+                $adminID=$um['admin_master_idadmin_master'];
+                adminMaster::__construct($adminID);
+                $admin=adminMaster::getAdmin();
+                if(is_array($admin))
+                {
+                    $um['admin_master_idadmin_master']=$admin;
+                }
                 return $um;
             }
             else
