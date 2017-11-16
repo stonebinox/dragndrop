@@ -753,7 +753,7 @@ app.controller("agents",function($scope,$compile,$http){
             }
             table+='">Approve</button><button type="button" class="btn btn-danger btn-xs';
             if(approveFlag==2){
-                table++' active';
+                table+=' active';
             }
             table+='">Reject</button></div></tr>';
         }
