@@ -534,7 +534,7 @@ app.controller("campaigns",function($scope,$compile,$http){
                 if(!validate(description)){
                     description='';
                 }
-                list+='<li class="list-group-item"><a href="campaign/'+campaignID+'" data-toggle="tooltip" title="Edit this campaign" data-placement="auto">'+campaignName+'</a>&nbsp;&bull;&nbsp;<span class="small text-info">'+description+'</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-share"></span></li>';
+                list+='<li class="list-group-item"><a href="campaign/'+campaignID+'" data-toggle="tooltip" title="Edit this campaign" data-placement="auto">'+campaignName+'</a>&nbsp;&bull;&nbsp;<span class="small text-info">'+description+'</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-share" style="cursor:pointer;" ng-click="showShareForm('+campaignID+')"></span></li>';
             }
             list+='</ul>';
             $("#campaignholder").html(list);
@@ -600,5 +600,10 @@ app.controller("campaigns",function($scope,$compile,$http){
         else{
             $("#campname").parent().addClass("has-error");
         }
+    };
+    $scope.showShareForm=function(campaignID){
+        var text='<form><div class="form-group"><label for="email">Email ID</label><input type="email" name="email" id="email" required placeholder="Enter a valid email ID" class="form-control"></div><button type="button" class="btn btn-primary">Share</button></form>';
+        messageBox("Share Campaign",text);
+        $compile("#myModal")($scope);
     };
 });
