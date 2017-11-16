@@ -300,6 +300,33 @@ $app->get("/campaign/{campaignID}",function($campaignID) use($app){
         return $App->redirect("/brandView");
     }
 });
+$app->get("/shareCampaign",function(Request $request) use($app){
+    if(($app['session']->get("uid"))&&($request->get("email"))&&($request->get("campaign_id")))
+    {  
+        require("../classes/adminMaster.php");
+        require("../classes/userMaster.php");
+        require("../classes/brandMaster.php");
+        require("../classes/campaignMaster.php");
+        require("../classes/itemMaster.php");
+        require("../classes/shareMaster.php");
+        $user=new userMaster;
+        $userID=$user->getUserIDFromEmail($request->get("email"));
+        if($userID!="INVALID_USER_EMAIL")
+        {
+            $share=new shareMaster;
+            $response=$share->shareCampaign($request->get("campaign_id"),$userID);
+            return $response;
+        }
+        else
+        {
+            return $userID;
+        }
+    }
+    else
+    {
+        return "INVALID_PARAMETERS";
+    }
+});
 $app->get("/campaignView",function() use($app){
     if(($app['session']->get("uid"))&&($app['session']->get("brand_id"))&&($app['session']->get("campaign_id")))
     {

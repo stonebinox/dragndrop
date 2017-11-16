@@ -603,8 +603,50 @@ app.controller("campaigns",function($scope,$compile,$http){
         }
     };
     $scope.showShareForm=function(campaignID){
-        var text='<p>You can share this campaign for a creative agent to review the files uploaded. Please ensure that the email ID you enter has already signed up as a creative agent.</p><hr><form><div class="form-group"><label for="email">Email ID</label><input type="email" name="email" id="email" required placeholder="Enter a valid email ID" class="form-control"></div><button type="button" class="btn btn-primary">Share</button></form>';
+        var text='<p>You can share this campaign for a creative agent to review the files uploaded. Please ensure that the email ID you enter has <i>already</i> signed up as a creative agent.</p><hr><form name="shareCamp"><div class="form-group"><label for="email">Email ID</label><input type="email" name="email" id="email" required placeholder="Enter a valid email ID" class="form-control"><input type="hidden" name="campaign_id" value="'+campaignID+'"></div><button type="button" class="btn btn-primary" ng-click="shareCampaign()">Share</button></form>';
         messageBox("Share Campaign",text);
         $compile("#myModal")($scope);
+    };
+    $scope.shareCampaign=function(){
+        var campaignID=document.shareCamp.campaign_id.value;
+        var email=$.trim($("#email").val());
+        if(validate(email)){
+            $("#email").parent().removeClass("has-error");
+            $http.get("shareCampaign?campaign_id="+campaignID+"&email="+email)
+            .then(function success(response){
+                response=$.trim(response.data);
+                switch(response){
+                    case "INVALID_PARAMETERS":
+                    default:
+                    messageBox("Problem","Something went wrong while sharing this campaign. Please try again later. This is the error we see: "+response);
+                    break;
+                    case "INVALID_USER_EMAIL":
+                    messageBox("Invalid Email","Please enter a valid email ID and try again.");
+                    break;
+                    case "INVALID_USER_ID":
+                    messageBox("Invalid User","The user you are trying to share with doesn't exist any more.");
+                    break;
+                    case "INVALID_CAMPAIGN_ID":
+                    messageBox("Invalid Campaign","The campaign you are trying to share is no longer valid. Please refresh the page and try again.");
+                    break;
+                    case "INVALID_ADMIN_TYPE":
+                    messageBox("Cannot Share","Campaigns can be shared only with users who are creative agents.");
+                    break;
+                    case "CAMPAIGN_ALREADY_SHARED":
+                    messageBox("Already Shared","This campaign was already shared with this email ID.");
+                    break;
+                    case "CAMPAIGN_SHARED":
+                    messageBox("Campaign Shared","The campaign was shared successfully.");
+                    break;
+                }
+            },
+            function error(response){
+                console.log(response);
+                messageBox("Problem","Something went wrong while sharing this campaign. Please try again later.");
+            });
+        }
+        else{
+            $("#email").parent().addClass("has-error");
+        }
     };
 });
