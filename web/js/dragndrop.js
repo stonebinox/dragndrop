@@ -684,7 +684,7 @@ app.controller("agents",function($scope,$compile,$http){
         });
     };
     $scope.displaySharedCampaigns=function(){
-        var sharedCampaigns=$scope.shareAray;
+        var sharedCampaigns=$scope.shareArray;
         var list='<ul class="list-group">';
         for(var i=0;i<sharedCampaigns.length;i++){
             var share=sharedCampaign[i];
