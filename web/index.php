@@ -124,11 +124,28 @@ $app->post("/googleLogin",function(Request $request) use($app){
         $response=$user->createAccountWithGoogle($request->get("id_token"),$request->get("user_email"),$request->get("user_name"),$creativeUser);
         if($response=="USER_AUTHENTICATED")
         {
-            return $app->redirect("/dashboard");
+            if($creativeUser==1)
+            {
+                return $app->redirect("/dashboard");
+            }
+            else
+            {
+                return $app->redirect("/agent");
+            }
         }
         else{
             return $app->redirect("/login?err=1");
         }
+    }
+    else
+    {
+        return $app->redirect("/login");
+    }
+});
+$app->get("/agent",function() use($app){
+    if($app['session']->get("uid"))
+    {
+        return $app['twig']->render("agent.twig");
     }
     else
     {
@@ -297,7 +314,7 @@ $app->get("/campaign/{campaignID}",function($campaignID) use($app){
     }
     else
     {
-        return $App->redirect("/brandView");
+        return $app->redirect("/brandView");
     }
 });
 $app->get("/shareCampaign",function(Request $request) use($app){

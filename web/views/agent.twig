@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+<body ng-app="dragndrop">
+<div class="container" ng-controller="agents">
+<div style="background:url(images/dragcheck.png) no-repeat center;-webkit-background-size:contain;-moz-background-size:contain;background-size:contain;width:100%;height:80px;"></div>
+<hr>
+  <div class="row">
+    <div class="col-sm-9">
+      <h1>Campaign Management</h1>
+    </div>
+    <div class="col-sm-3">
+      <button type="button" class="btn btn-default" ng-click="logout()" style="margin-top:20px;">Log out</button>
+    </div>
+  </div>
+  <hr>
+  <div class="panel panel-default" ng-init="getItems()">
+    <div class="panel-heading"><strong>Files</strong></div>
+    <div class="panel-body" id="itemholder"></div>
+  </div>
+</div>
+<div class="container">
+  <div id="myModal" class="modal fade" role="dialog"></div>
+</div>
+</body>
+{% endblock %}

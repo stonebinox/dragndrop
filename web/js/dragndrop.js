@@ -650,3 +650,6 @@ app.controller("campaigns",function($scope,$compile,$http){
         }
     };
 });
+app.controller("agents",function($scope,$compile,$http){
+    
+});
