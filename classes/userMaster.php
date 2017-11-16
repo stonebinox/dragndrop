@@ -252,7 +252,7 @@ class userMaster extends adminMaster
             return "INVALID_ID_TOKEN";
         }
     }
-    function getAdminType()
+    function getAdminType() //to get user's admin role
     {
         $app=$this->app;
         if($this->userValid)
