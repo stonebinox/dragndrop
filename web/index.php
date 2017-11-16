@@ -444,7 +444,7 @@ $app->get("/agent/campaign",function() use($app){
         return $app->redirect("/agent");
     }
 });
-$app->get("/approveItem",function(Request $request) use($app){
+$app->get("/agent/approveItem",function(Request $request) use($app){
     if(($app['session']->get("uid"))&&($request->get("item_id")))
     {
         require("../classes/adminMaster.php");
@@ -461,7 +461,7 @@ $app->get("/approveItem",function(Request $request) use($app){
         return "INVALID_PARAMETERS";
     }
 });
-$app->get("/rejectItem",function(Request $request) use($app){
+$app->get("/agent/rejectItem",function(Request $request) use($app){
     if(($app['session']->get("uid"))&&($request->get("item_id")))
     {
         require("../classes/adminMaster.php");
