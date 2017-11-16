@@ -653,7 +653,7 @@ app.controller("campaigns",function($scope,$compile,$http){
 app.controller("agents",function($scope,$compile,$http){
     $scope.shareArray=[];
     $scope.logout=function(){
-        $scope.campaignArray.length=[];
+        $scope.shareArray.length=[];
         window.location='logout';
     };
     $scope.getSharedCampaigns=function(){
