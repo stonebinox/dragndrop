@@ -534,10 +534,11 @@ app.controller("campaigns",function($scope,$compile,$http){
                 if(!validate(description)){
                     description='';
                 }
-                list+='<li class="list-group-item"><a href="campaign/'+campaignID+'" data-toggle="tooltip" title="Edit this campaign" data-placement="auto">'+campaignName+'</a>&nbsp;&bull;&nbsp;<span class="small text-info">'+description+'</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-share" style="cursor:pointer;" ng-click="showShareForm('+campaignID+')"></span></li>';
+                list+='<li class="list-group-item"><a href="campaign/'+campaignID+'" data-toggle="tooltip" title="Edit this campaign" data-placement="auto">'+campaignName+'</a>&nbsp;&bull;&nbsp;<span class="small text-info">'+description+'</span>&nbsp;&nbsp;<span class="glyphicon glyphicon-share" style="cursor:pointer;" ng-click="showShareForm('+campaignID+')" data-toggle="tooltip" title="Share this campaign" data-placement="auto"></span></li>';
             }
             list+='</ul>';
             $("#campaignholder").html(list);
+            $compile("#campaignholder")($scope);
             $('[data-toggle="tooltip"]').tooltip({
                 trigger: "hover"
             });
