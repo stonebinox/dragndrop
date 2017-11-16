@@ -21,7 +21,7 @@
             <div class="checkbox">
                 <label>
                     <input type="checkbox" data-toggle="toggle" onchange="updateCreativeFlag()" id="toggle" data-on="Yes" data-off="No">
-                    Are you a creative agent?
+                    Are you a creative agent? You cannot change this option later.
                 </label>
             </div>
             <hr>
@@ -33,14 +33,14 @@
   //$("#email").focus();
   var creativeUser=false;
   function updateCreativeFlag(){
-      console.log(document.getElementById("toggle").checked);
+      creativeUser=document.getElementById("toggle").checked;
   }
   function onSignIn(googleUser) {
         var profile = googleUser.getBasicProfile();
         var userName=profile.getName();
         var email=profile.getEmail();
         var id_token = googleUser.getAuthResponse().id_token;
-        $("#glogin").append('<input type="hidden" name="id_token" value="'+id_token+'"><input type="hidden" name="user_email" value="'+email+'"><input type="hidden" name="user_name" value="'+userName+'">');
+        $("#glogin").append('<input type="hidden" name="id_token" value="'+id_token+'"><input type="hidden" name="user_email" value="'+email+'"><input type="hidden" name="user_name" value="'+userName+'"><input type="hidden" name="creative_user" value="'+creativeUser+'">');
         document.getElementById("glogin").submit();
       };
   //-->

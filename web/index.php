@@ -108,12 +108,20 @@ $app->post("/login_action",function(Request $request) use($app){
     }
 });
 $app->post("/googleLogin",function(Request $request) use($app){
-    if(($request->get("id_token"))&&($request->get("user_email"))&&($request->get("user_name")))
+    if(($request->get("id_token"))&&($request->get("user_email"))&&($request->get("user_name"))&&($request->get("creative_user")))
     {
         require("../classes/adminMaster.php");
         require("../classes/userMaster.php");
         $user=new userMaster;
-        $response=$user->createAccountWithGoogle($request->get("id_token"),$request->get("user_email"),$request->get("user_name"));
+        if(($request->get("creative_user")=="true")||($request->get("creative_user")==true))
+        {
+            $creativeUser=11;
+        }
+        else
+        {
+            $creativeUser=1;
+        }
+        $response=$user->createAccountWithGoogle($request->get("id_token"),$request->get("user_email"),$request->get("user_name"),$creativeUser);
         if($response=="USER_AUTHENTICATED")
         {
             return $app->redirect("/dashboard");

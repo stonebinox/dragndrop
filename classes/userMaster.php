@@ -206,7 +206,7 @@ class userMaster extends adminMaster
             return "INVALID_USER_ID";
         }
     }
-    function createAccountWithGoogle($idToken,$email,$userName)
+    function createAccountWithGoogle($idToken,$email,$userName,$adminID)
     {
         $app=$this->app;
         $idToken=addslashes($idToken);
@@ -228,7 +228,7 @@ class userMaster extends adminMaster
                     }
                     else
                     {
-                        $in="INSERT INTO user_master (timestamp,user_email,user_name,google_id_token,online_flag) VALUES (NOW(),'$userEmail','$userName','$idToken','1')";
+                        $in="INSERT INTO user_master (timestamp,user_email,user_name,google_id_token,online_flag,admin_master_idadmin_master) VALUES (NOW(),'$userEmail','$userName','$idToken','1','$adminID')";
                         $in=$app['db']->executeQuery($in);
                         $um="SELECT iduser_master FROM user_master WHERE user_email='$userEmail'";
                         $um=$app['db']->fetchAssoc($um);
