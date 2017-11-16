@@ -68,6 +68,7 @@ $app->get("registration",function() use($app){
 $app->post("createAccount",function(Request $request) use($app){
     if(($request->get("user_name"))&&($request->get("user_email"))&&($request->get("user_password"))&&($request->get("user_password2")))
     {
+        require("../classes/adminMaster.php");
         require("../classes/userMaster.php");
         $user=new userMaster;
         $response=$user->createAccount($request->get("user_name"),$request->get("user_email"),$request->get("user_password"),$request->get("user_password2"));
@@ -88,6 +89,7 @@ $app->post("createAccount",function(Request $request) use($app){
 $app->post("/login_action",function(Request $request) use($app){
     if(($request->get("user_email"))&&($request->get("user_password")))
     {
+        require("../classes/adminMaster.php");
         require("../classes/userMaster.php");
         $user=new userMaster;
         $response=$user->authenticateUser($request->get("user_email"),$request->get("user_password"));
@@ -108,6 +110,7 @@ $app->post("/login_action",function(Request $request) use($app){
 $app->post("/googleLogin",function(Request $request) use($app){
     if(($request->get("id_token"))&&($request->get("user_email"))&&($request->get("user_name")))
     {
+        require("../classes/adminMaster.php");
         require("../classes/userMaster.php");
         $user=new userMaster;
         $response=$user->createAccountWithGoogle($request->get("id_token"),$request->get("user_email"),$request->get("user_name"));
@@ -126,6 +129,7 @@ $app->post("/googleLogin",function(Request $request) use($app){
 });
 $app->get("logout",function() use($app){
     if($app['session']->get("uid")){
+        require("../classes/adminMaster.php");
         require("../classes/userMaster.php");
         $userID=$app['session']->get("uid");
         $user=new userMaster($userID);
@@ -149,6 +153,7 @@ $app->get("/dashboard",function() use($app){
 });
 $app->get("/getBrands",function() use($app){
     if($app['session']->get("uid")){
+        require("../classes/adminMaster.php");
         require("../classes/userMaster.php");
         require("../classes/brandMaster.php");
         $brandObj=new brandMaster;
@@ -168,6 +173,7 @@ $app->get("/getBrands",function() use($app){
 });
 $app->post("/saveBrand",function(Request $request) use($app){
     if($app['session']->get("uid")){
+        require("../classes/adminMaster.php");
         require("../classes/userMaster.php");
         require("../classes/brandMaster.php");
         $brand=new brandMaster;
@@ -204,6 +210,7 @@ $app->get("/brand/{brandID}",function($brandID) use($app){
 $app->get("/getBrand",function() use($app){
     if(($app['session']->get("uid"))&&($app['session']->get("brand_id")))
     {
+        require("../classes/adminMaster.php");
         require("../classes/userMaster.php");
         require("../classes/brandMaster.php");
         $brandID=$app['session']->get("brand_id");
@@ -226,6 +233,7 @@ $app->get("/getBrand",function() use($app){
 $app->get("/getCampaigns",function() use($app){
     if(($app['session']->get("uid"))&&($app['session']->get("brand_id")))
     {
+        require("../classes/adminMaster.php");
         require("../classes/userMaster.php");
         require("../classes/brandMaster.php");
         require("../classes/campaignMaster.php");
@@ -247,6 +255,7 @@ $app->get("/getCampaigns",function() use($app){
 });
 $app->post("/saveCampaign",function(Request $request) use($app){
     if($app['session']->get("uid")){
+        require("../classes/adminMaster.php");
         require("../classes/userMaster.php");
         require("../classes/brandMaster.php");
         require("../classes/campaignMaster.php");
@@ -263,6 +272,7 @@ $app->get("/campaign/{campaignID}",function($campaignID) use($app){
     if($app['session']->get("uid"))
     {
         $campaignID=addslashes(htmlentities($campaignID));
+        require("../classes/adminMaster.php");
         require("../classes/userMaster.php");
         require("../classes/brandMaster.php");
         require("../classes/campaignMaster.php");
@@ -296,6 +306,7 @@ $app->get("/campaignView",function() use($app){
 $app->post("/uploadItem",function(Request $request) use($app){
     if(($app['session']->get("uid"))&&($app['session']->get("brand_id"))&&($app['session']->get("campaign_id"))&&($request->files->get("items")))
     {
+        require("../classes/adminMaster.php");
         require("../classes/userMaster.php");
         require("../classes/brandMaster.php");
         require("../classes/campaignMaster.php");
@@ -312,6 +323,7 @@ $app->post("/uploadItem",function(Request $request) use($app){
 $app->get("/getItems",function() use($app){
     if(($app['session']->get("uid"))&&($app['session']->get("brand_id"))&&($app['session']->get("campaign_id")))
     {
+        require("../classes/adminMaster.php");
         require("../classes/userMaster.php");
         require("../classes/brandMaster.php");
         require("../classes/campaignMaster.php");
