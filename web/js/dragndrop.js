@@ -723,6 +723,9 @@ app.controller("agents",function($scope,$compile,$http){
                     default:
                     messageBox("Problem","Something went wrong while loading uploaded items. Please try again later.");
                     break;
+                    case "NO_IMAGES_FOUND":
+                    $("#itemlist").html("No files found.");
+                    break;
                 }
             }
         },
