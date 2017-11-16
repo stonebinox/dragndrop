@@ -381,7 +381,7 @@ app.controller("brands",function($scope,$compile,$http){
     $scope.displayBrands=function(){
         if(validate($scope.brandArray)){
             var brands=$scope.brandArray;
-            var list='<div class="list-group">';
+            var list='<ul class="list-group">';
             for(var i=0;i<brands.length;i++){
                 var brand=brands[i];
                 var brandID=brand.idbrand_master;
@@ -390,9 +390,9 @@ app.controller("brands",function($scope,$compile,$http){
                 if(!(validate(description))){
                     description='';
                 }
-                list+='<a href="brand/'+brandID+'" class="list-group-item" data-toggle="tooltip" title="Edit this brand" data-placement="auto">'+brandName+'&nbsp;<span class="text-info">'+description+'</span></a>';
+                list+='<li class="list-group-item"><a href="brand/'+brandID+'" data-toggle="tooltip" title="Edit this brand" data-placement="auto">'+brandName+'</a>&nbsp;<span class="text-info">'+description+'</span></li>';
             }
-            list+='</div>';
+            list+='</ul>';
             $("#brandholder").html(list);
             $('[data-toggle="tooltip"]').tooltip({
                 trigger: "hover"
