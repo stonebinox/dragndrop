@@ -20,7 +20,7 @@
         <div class="text-left">
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" data-toggle="toggle">
+                    <input type="checkbox" data-toggle="toggle" onchange="updateCreativeFlag(this)">
                     Are you a creative agent?
                 </label>
             </div>
@@ -31,6 +31,10 @@
   <script type="text/javascript">
   <!--
   //$("#email").focus();
+  var creativeUser=false;
+  function updateCreativeFlag(toggle){
+      console.log(toggle.value);
+  }
   function onSignIn(googleUser) {
         var profile = googleUser.getBasicProfile();
         var userName=profile.getName();
