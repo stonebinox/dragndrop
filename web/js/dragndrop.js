@@ -699,9 +699,9 @@ app.controller("agents",function($scope,$compile,$http){
             if(!validate(campaignDescription)){
                 campaignDescription='';
             }
-            list+='<li class="list-group-item"><a href="#">'+campaignName+'</a>&nbsp;&bull;&nbsp;<span class="text-info small">'+campaignDescription+'</span></li>';
+            list+='<li class="list-group-item"><a href="campaign/'+campaignID+'">'+campaignName+'</a>&nbsp;&bull;&nbsp;<span class="text-info small">'+campaignDescription+'</span></li>';
         }
         list+='</ul>';
         $("#campaignholder").html(list);
-    }
+    };
 });

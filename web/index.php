@@ -308,7 +308,17 @@ $app->get("/campaign/{campaignID}",function($campaignID) use($app){
         if($campaign->campaignValid)
         {
             $app['session']->set("campaign_id",$campaignID);
-            return $app->redirect("/campaignView");
+            $userID=$app['session']->get("uid");
+            $user=new userMaster($userID);
+            $adminID=$user->getAdminType();
+            if($adminID==1)
+            {
+                return $app->redirect("/campaignView");
+            }
+            else
+            {
+                return $app->redirect("/agent/campaign");
+            }
         }
         else
         {
@@ -355,8 +365,7 @@ $app->get("/campaignView",function() use($app){
     else
     {
         return $app->redirect("/login");
-    } //AKIAI5IYY7ZOEO5MCS5A
-    //b3UYBKS3i2IU9ceBVyJ3Fxm0WG0oOHLlujJzo28D
+    }
 });
 $app->post("/uploadItem",function(Request $request) use($app){
     if(($app['session']->get("uid"))&&($app['session']->get("brand_id"))&&($app['session']->get("campaign_id"))&&($request->files->get("items")))
@@ -400,7 +409,7 @@ $app->get("/getItems",function() use($app){
         return "INVALID_PARAMETERS";
     }
 });
-$app->get("getSharedCampaigns",function() use($app){
+$app->get("/getSharedCampaigns",function() use($app){
     if($app['session']->get("uid"))
     {  
         require("../classes/adminMaster.php");
@@ -423,6 +432,16 @@ $app->get("getSharedCampaigns",function() use($app){
     else
     {
         return "INVALID_PARAMETERS";
+    }
+});
+$app->get("/agent/campaign",function() use($app){
+    if(($app['session']->get("campaign_id"))&&($app['session']->get("uid")))
+    {
+        return $app['twig']->render("campaign.twig");
+    }
+    else
+    {
+        return $app->redirect("/agent");
     }
 });
 $app->run();
