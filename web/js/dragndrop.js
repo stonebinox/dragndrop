@@ -751,11 +751,11 @@ app.controller("agents",function($scope,$compile,$http){
             if(approveFlag==1){
                 table+=' active';
             }
-            table+='">Approve</button><button type="button" class="btn btn-danger btn-xs';
+            table+='" ng-click="approveFile('+itemID+')">Approve</button><button type="button" class="btn btn-danger btn-xs';
             if(approveFlag==2){
                 table+=' active';
             }
-            table+='">Reject</button></div></tr>';
+            table+='" ng-click="rejectFile('+itemID+')">Reject</button></div></tr>';
         }
         table+='</tbody></table>';
         $("#itemlist").html(table);
