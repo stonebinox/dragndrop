@@ -218,7 +218,7 @@ class userMaster extends adminMaster
                 $userName=trim(ucwords(addslashes(htmlentities($userName))));
                 if(($userName!="")&&($userName!=NULL))
                 {
-                    $um="SELECT iduser_master FROM user_master WHERE user_email='$userEmail' AND stat='1'";
+                    $um="SELECT iduser_master FROM user_master WHERE user_email='$email' AND stat='1'";
                     $um=$app['db']->fetchAssoc($um);
                     if(($um!="")&&($um!=NULL))
                     {
