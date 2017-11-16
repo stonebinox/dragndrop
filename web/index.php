@@ -397,5 +397,30 @@ $app->get("/getItems",function() use($app){
         return "INVALID_PARAMETERS";
     }
 });
+$app->get("getSharedCampaigns",function() use($app){
+    if($app['session']->get("uid"))
+    {  
+        require("../classes/adminMaster.php");
+        require("../classes/userMaster.php");
+        require("../classes/brandMaster.php");
+        require("../classes/campaignMaster.php");
+        require("../classes/itemMaster.php");
+        require("../classes/shareMaster.php");
+        $share=new shareMaster;
+        $shares=$share->getSharedCampaigns($app['session']->get("uid"));
+        if(is_array($shares))
+        {
+            return json_encode($shares);
+        }
+        else
+        {
+            return $shares;
+        }
+    }
+    else
+    {
+        return "INVALID_PARAMETERS";
+    }
+});
 $app->run();
 ?>

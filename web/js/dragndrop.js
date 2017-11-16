@@ -651,5 +651,39 @@ app.controller("campaigns",function($scope,$compile,$http){
     };
 });
 app.controller("agents",function($scope,$compile,$http){
-    
+    $scope.shareArray=[];
+    $scope.logout=function(){
+        $scope.campaignArray.length=[];
+        window.location='logout';
+    };
+    $scope.getSharedCampaigns=function(){
+        $http.get("getSharedCampaigns")
+        .then(function success(response){
+            response=response.data;
+            if(typeof response=="object"){
+                $scope.shareArray=response;
+                $scope.displaySharedCampaigns();
+            }
+            else{
+                response=$.trim(response);
+                switch(response){
+                    case "INVALID_PARAMETERS":
+                    case "INVALID_USER_ID":
+                    default:
+                    $scope.logout();
+                    break;
+                    case "NO_SHARED_CAMPAIGNS_FOUND":
+                    $("#campaignholder").html("No campaigns have been shared with you.");
+                    break;
+                }
+            }
+        },
+        function error(response){
+            console.log(response);
+            messageBox("Problem","Something went wrong. Try again later.");
+        });
+    };
+    $scope.displaySharedCampaigns=function(){
+        console.log($scope.shareArray);
+    }
 });

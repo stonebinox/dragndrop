@@ -136,7 +136,7 @@ class shareMaster extends itemMaster
             return "INVALID_SHARE_ID";
         }
     }
-    function getCampaignsSharedWithUser($userID)
+    function getSharedCampaigns($userID)
     {
         $userId=addslashes(htmlentities($userID));
         $app=$this->app;
