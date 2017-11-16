@@ -77,7 +77,7 @@ class shareMaster extends itemMaster
                     $sm=$app['db']->fetchAssoc($sm);
                     if(($sm=="")||($sm==NULL))
                     {
-                        $in="INSERT INTO campaign_master (timestamp,campaign_master_idcampaign_master,user_master_iduser_master) VALUES (NOW(),'$campaignID','$userID')";
+                        $in="INSERT INTO share_master (timestamp,campaign_master_idcampaign_master,user_master_iduser_master) VALUES (NOW(),'$campaignID','$userID')";
                         $in=$app['db']->executequery($in);
                         return "CAMPAIGN_SHARED";
                     }
