@@ -746,9 +746,65 @@ app.controller("agents",function($scope,$compile,$http){
             timestamp=dateFormat(sp[0])+' at '+sp[1];
             var itemPath=item.item_path;
             var itemName=item.item_name;
-            table+='<tr><td><a href="'+itemPath+'" target="_blank">'+itemName+'</a></td><td>'+timestamp+'</td><td><div class="btn-group"><button type="button" class="btn btn-success btn-xs">Approve</button><button type="button" class="btn btn-danger btn-xs">Reject</button></div></tr>';
+            var approveFlag=item.approval_flag;
+            table+='<tr><td><a href="'+itemPath+'" target="_blank">'+itemName+'</a></td><td>'+timestamp+'</td><td><div class="btn-group"><button type="button" class="btn btn-success btn-xs';
+            if(approveFlag==1){
+                table+=' active';
+            }
+            table+='">Approve</button><button type="button" class="btn btn-danger btn-xs';
+            if(approveFlag==2){
+                table++' active';
+            }
+            table+='">Reject</button></div></tr>';
         }
         table+='</tbody></table>';
         $("#itemlist").html(table);
+        $compile("#itemlist")($scope);
+    };
+    $scope.approveFile=function(itemID){
+        $http.get("approveItem?item_id="+itemID)
+        .then(function success(response){
+            response=$.trim(response.data);
+            switch(response){
+                case "INVALID_PARAMETERS":
+                default:
+                messageBox("Problem","Something went wrong while approving this file. Please try again later. This is the error we see: "+response);
+                break;
+                case "INVALID_ITEM_ID":
+                messageBox("Invalid File","The file you are working with is invalid or doesn't exist.");
+                break;
+                case "ITEM_APPROVED":
+                messageBox("Item Approved","The item was approved successfully.");
+                $scope.getItems();
+                break;
+            }
+        },
+        function error(response){
+            console.log(response);
+            messageBox("Problem","Something went wrong while approving this item. Please try again later.");
+        });
+    };
+    $scope.rejectFile=function(itemID){
+        $http.get("rejectItem?item_id="+itemID)
+        .then(function success(response){
+            response=$.trim(response.data);
+            switch(response){
+                case "INVALID_PARAMETERS":
+                default:
+                messageBox("Problem","Something went wrong while rejecting this file. Please try again later. This is the error we see: "+response);
+                break;
+                case "INVALID_ITEM_ID":
+                messageBox("Invalid File","The file you are working with is invalid or doesn't exist.");
+                break;
+                case "ITEM_REJECTED":
+                messageBox("Item Rejected","The item was rejected successfully.");
+                $scope.getItems();
+                break;
+            }
+        },
+        function error(response){
+            console.log(response);
+            messageBox("Problem","Something went wrong while rejecting this item. Please try again later.");
+        });
     };
 });

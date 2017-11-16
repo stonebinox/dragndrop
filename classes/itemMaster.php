@@ -145,5 +145,35 @@ class itemMaster extends campaignMaster
             return "INVALID_CAMPAIGN_ID";
         }
     }
+    function approveItem()
+    {
+        $app=$this->app;
+        if($this->itemValid)
+        {
+            $itemID=$this->item_id;
+            $im="UPDATE item_master SET approval_flag='1' WHERE iditem_master='$itemID'";
+            $im=$app['db']->executeUpdate($im);
+            return "ITEM_APPROVED";
+        }
+        else
+        {
+            return "INVALID_ITEM_ID";
+        }
+    }
+    function rejectItem()
+    {
+        $app=$this->app;
+        if($this->itemValid)
+        {
+            $itemID=$this->item_id;
+            $im="UPDATE item_master SET approval_flag='2' WHERE iditem_master='$itemID'";
+            $im=$app['db']->executeUpdate($im);
+            return "ITEM_REJECTED";
+        }
+        else
+        {
+            return "INVALID_ITEM_ID";
+        }
+    }
 }
 ?>

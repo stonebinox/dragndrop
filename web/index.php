@@ -444,5 +444,39 @@ $app->get("/agent/campaign",function() use($app){
         return $app->redirect("/agent");
     }
 });
+$app->get("/approveItem",function(Request $request) use($app){
+    if(($app['session']->get("uid"))&&($request->get("item_id")))
+    {
+        require("../classes/adminMaster.php");
+        require("../classes/userMaster.php");
+        require("../classes/brandMaster.php");
+        require("../classes/campaignMaster.php");
+        require("../classes/itemMaster.php");
+        $item=new itemMaster($request->get("item_id"));
+        $response=$item->approveItem();
+        return $response;
+    }
+    else
+    {
+        return "INVALID_PARAMETERS";
+    }
+});
+$app->get("/rejectItem",function(Request $request) use($app){
+    if(($app['session']->get("uid"))&&($request->get("item_id")))
+    {
+        require("../classes/adminMaster.php");
+        require("../classes/userMaster.php");
+        require("../classes/brandMaster.php");
+        require("../classes/campaignMaster.php");
+        require("../classes/itemMaster.php");
+        $item=new itemMaster($request->get("item_id"));
+        $response=$item->rejectItem();
+        return $response;
+    }
+    else
+    {
+        return "INVALID_PARAMETERS";
+    }
+});
 $app->run();
 ?>
