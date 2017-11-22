@@ -849,13 +849,22 @@ app.controller("agents",function($scope,$compile,$http){
                     var width=img.naturalWidth;
                     var height=img.naturalHeight;
                     $("#"+itemID+"details").html(width+'x'+height);
-                    pos+=1;
-                    $scope.getDimensions(pos);
                 };
+            }
+            else if((ext=="mp4")||(ext=="ogg")||(ext=="flv")){
+                $("#"+itemID+"details").html('<video id="'+itemID+'video" src="'+itemPath+'" style="display:none;"></video>');
+                var video=document.getElementById(itemID+"video");
+                video.onload=function(){
+                    var width=video.videoWidth;
+                    var height=video.videoHeight;
+                    $("#"+itemID+"details").html(width+'x'+height);
+                }
             }
             else{
                 $("#"+itemID+"details").html("NA");
             }
+            pos+=1;
+            $scope.getDimensions(pos);
         }
     };
     $scope.approveFile=function(itemID){
