@@ -222,11 +222,26 @@ app.controller('dd', function($scope,$compile,$http){
             $("#prop-table").append(tr2);
         }
         $scope.displayItemList();
-    }; //08049227000 08069151515
+    }; 
     $scope.showDescriptionForm=function(pos){
         console.log(pos);
         var text='<form><div class="form-group"><label for="desc">Description</label><textarea name="desc" id="desc" placeholder="Enter a description for this file" class="form-control"></textarea></div><button type="button" class="btn btn-primary">Update</button></form>';
         messageBox("Add Description",text);
+    };
+    $scope.saveDescription=function(pos){
+        var desc=$.trim($("#desc").val());
+        if(validate(desc)){
+            $("#desc").parent().removeClass("has-error");
+            var prop=["Description",desc];
+            var item=$scope.itemList[pos];
+            var properties=item[1];
+            properties.push(prop);
+            item[1]=properties;
+            $scope.itemList[pos]=item;
+        }
+        else{
+            $("#desc").parent().addClass("has-error");
+        }
     };
     $scope.displayItemList=function(){
         if($scope.itemList.length!=0){
@@ -238,7 +253,7 @@ app.controller('dd', function($scope,$compile,$http){
                 var filesize=properties[1];
                 filesize=filesize[1];
                 var filename=properties[0][1];
-                table+='<tr><td>'+filename+'</td><td>'+filesize+'</td><td><div class="btn-group" id="item'+i+'"><button type="button" class="btn btn-info btn-xs" ng-click="showDescriptionForm('+i+')">Add description</button><button type="button" class="btn btn-primary btn-xs" ng-click="uploadItem('+i+')">Upload</button><button type="button" class="btn btn-default btn-xs" ng-click="removeItem('+i+')">Remove</button></div></td></tr>';
+                table+='<tr><td>'+filename+'</td><td>'+filesize+'</td><td><div class="btn-group" id="item'+i+'"><button type="button" class="btn btn-info btn-xs" ng-click="showDescriptionForm('+i+')">Edit description</button><button type="button" class="btn btn-primary btn-xs" ng-click="uploadItem('+i+')">Upload</button><button type="button" class="btn btn-default btn-xs" ng-click="removeItem('+i+')">Remove</button></div></td></tr>';
             }
             table+='</tbody></table>';
             $("#itemlist").html(table);
@@ -256,6 +271,10 @@ app.controller('dd', function($scope,$compile,$http){
     $scope.uploadItem=function(pos){
         var item=$scope.itemList[pos];
         var file=item[0];
+        var properties=item[1];
+        var desc=properties[properties.length-1];
+        desc=desc[1];
+        console.log(desc);
         var formdata=new FormData();
         formdata.append("items",file);
         if(validate(file)){
