@@ -415,7 +415,7 @@ app.controller('dd', function($scope,$compile,$http){
         }
         table+='</tbody></table>';
         $("#pastitemlist").html(table);
-        $("#pastitemlist")($scope);
+        //$("#pastitemlist")($scope);
     };
     $scope.showShare=function(url){
         var text='<div class="panel panel-default"><div class="panel-body">'+url+'</div></div>';
