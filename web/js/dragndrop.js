@@ -358,7 +358,7 @@ app.controller('dd', function($scope,$compile,$http){
         });
     };
     $scope.displayPastItems=function(){
-        var table='<strong>Past Uploaded Items</strong><br><table class="table"><thead><tr><th>Name</th><th>Uploaded on</th><th>Actions</th></tr></thead><tbody>';
+        var table='<strong>Past Uploaded Items</strong><br><table class="table"><thead><tr><th>Name</th><th>Description</th><th>Uploaded on</th><th>Actions</th></tr></thead><tbody>';
         var pastItems=$scope.pastItemList;
         for(var i=0;i<pastItems.length;i++){
             var item=pastItems[i];
@@ -369,7 +369,14 @@ app.controller('dd', function($scope,$compile,$http){
             var itemPath=item.item_path;
             var itemName=item.item_name;
             var approveFlag=item.approval_flag;
-            table+='<tr><td><a href="'+itemPath+'" target="_blank">'+itemName+'</a></td><td>'+timestamp+'</td><td><div class="btn-group">';
+            var description=item.item_description;
+            if(validate(description)){
+                description=$.trim(nl2br(description));
+            }
+            else{
+                description='No description added';
+            }
+            table+='<tr><td><a href="'+itemPath+'" target="_blank">'+itemName+'</a></td><td>'+description+'</td><td>'+timestamp+'</td><td><div class="btn-group">';
             if(approveFlag==1){
                 table+='<button type="button" class="btn btn-success btn-xs">Approved</button>';
             }
