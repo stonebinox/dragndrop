@@ -798,7 +798,7 @@ app.controller("agents",function($scope,$compile,$http){
         });
     };
     $scope.displayItems=function(){
-        var table='<table class="table"><thead><tr><th>Name</th><th>Uploaded on</th><th>Actions</th></tr></thead><tbody>';
+        var table='<table class="table"><thead><tr><th>Name</th><th>Description</th><th>Uploaded on</th><th>Actions</th></tr></thead><tbody>';
         var pastItems=$scope.itemList;
         $scope.itemCount=pastItems.length;
         for(var i=0;i<pastItems.length;i++){
@@ -810,7 +810,14 @@ app.controller("agents",function($scope,$compile,$http){
             var itemPath=item.item_path;
             var itemName=item.item_name;
             var approveFlag=item.approval_flag;
-            table+='<tr><td><a href="'+itemPath+'" target="_blank">'+itemName+'</a></td><td>'+timestamp+'</td><td><div class="btn-group"><button type="button" class="btn btn-success btn-xs';
+            var description=item.item_description;
+            if(validate(description)){
+                description=$.trim(nl2br(description));
+            }
+            else{
+                description='No description';
+            }
+            table+='<tr><td><a href="'+itemPath+'" target="_blank">'+itemName+'</a></td><td>'+description+'</td><td>'+timestamp+'</td><td><div class="btn-group"><button type="button" class="btn btn-success btn-xs';
             if(approveFlag==1){
                 table+=' active';
             }
