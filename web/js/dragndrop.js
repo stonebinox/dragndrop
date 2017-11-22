@@ -225,8 +225,9 @@ app.controller('dd', function($scope,$compile,$http){
     }; 
     $scope.showDescriptionForm=function(pos){
         console.log(pos);
-        var text='<form><div class="form-group"><label for="desc">Description</label><textarea name="desc" id="desc" placeholder="Enter a description for this file" class="form-control"></textarea></div><button type="button" class="btn btn-primary">Update</button></form>';
+        var text='<form><div class="form-group"><label for="desc">Description</label><textarea name="desc" id="desc" placeholder="Enter a description for this file" class="form-control"></textarea></div><button type="button" class="btn btn-primary" ng-click="saveDescription('+pos+')">Update</button></form>';
         messageBox("Add Description",text);
+        $compile("#myModal")($scope);
     };
     $scope.saveDescription=function(pos){
         var desc=$.trim($("#desc").val());
