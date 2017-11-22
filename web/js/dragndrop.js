@@ -838,7 +838,6 @@ app.controller("agents",function($scope,$compile,$http){
             var ext=$.trim(sp[0]);
             ext=ext.split("").reverse().join("");
             ext=ext.toLowerCase();
-            console.log(ext);
             if((ext=="jpg")||(ext=="jpeg")||(ext=="png")||(ext=="bmp")){
                 var img=new Image();
                 img.src=itemPath;
@@ -846,6 +845,7 @@ app.controller("agents",function($scope,$compile,$http){
                     var width=img.naturalWidth;
                     var height=img.naturalHeight;
                     $("#"+itemID+"details").html(width+'x'+height);
+                    console.log(itemID);
                 };
             }
         }
