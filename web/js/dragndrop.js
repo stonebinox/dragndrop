@@ -240,6 +240,7 @@ app.controller('dd', function($scope,$compile,$http){
                 },
                 method: "POST",
                 success: function(response){
+                    console.log(response);
                     if((validate(response))&&(response!="INVALID_PARAMETERS")){ 
                         if(response=="INVALID_ITEM_ID"){
                             messageBox("Invalid File","The file you are working on is invalid.");
