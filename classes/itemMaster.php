@@ -183,8 +183,9 @@ class itemMaster extends campaignMaster
         {
             $app=$this->app;
             $itemID=$this->item_id;
+            $description=trim(addslashes(htmlentities($description)));
             $im="UPDATE item_master SET item_description='$description' WHERE iditem_master='$itemID'";
-            $im=$app['db']->fetchAssoc($im);
+            $im=$app['db']->executeUpdate($im);
             return "ITEM_DESCRIPTION_UPDATED";
         }
         else
