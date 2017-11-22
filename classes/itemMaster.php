@@ -119,6 +119,7 @@ class itemMaster extends campaignMaster
     {
         $s3Client=$GLOBALS['s3Client'];
         $description=trim(addslashes(htmlentities($description)));
+        echo $description;
         $campaignID=addslashes(htmlentities($campaignID));
         campaignMaster::__construct($campaignID);
         if($this->campaignValid)
