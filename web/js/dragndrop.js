@@ -798,7 +798,7 @@ app.controller("agents",function($scope,$compile,$http){
         });
     };
     $scope.displayItems=function(){
-        var table='<table class="table"><thead><tr><th>Name</th><th>Description</th><th>Uploaded on</th><th>Actions</th></tr></thead><tbody>';
+        var table='<table class="table"><thead><tr><th>Name</th><th>Description</th><th>Details</th><th>Uploaded on</th><th>Actions</th></tr></thead><tbody>';
         var pastItems=$scope.itemList;
         $scope.itemCount=pastItems.length;
         for(var i=0;i<pastItems.length;i++){
@@ -808,6 +808,20 @@ app.controller("agents",function($scope,$compile,$http){
             var sp=timestamp.split(" ");
             timestamp=dateFormat(sp[0])+' at '+sp[1];
             var itemPath=item.item_path;
+            var rev=itemPath.split("").reverse().join("");
+            var sp=rev.split(".");
+            var ext=$.trim(sp[0]);
+            ext=ext.split("").reverse().join("");
+            ext=ext.toLowerCase();
+            if((ext=="jpg")||(ext=="jpeg")||(ext=="png")||(ext=="bmp")){
+                var img=new Image();
+                img.src=itemPath;
+                img.onload=function(){
+                    var width=img.naturalWidth;
+                    var height=img.naturalHeight;
+                    $("#"+itemID+"details").html(width+'x'+height);
+                };
+            }
             var itemName=item.item_name;
             var approveFlag=item.approval_flag;
             var description=item.item_description;
@@ -817,7 +831,7 @@ app.controller("agents",function($scope,$compile,$http){
             else{
                 description='No description';
             }
-            table+='<tr><td><a href="'+itemPath+'" target="_blank">'+itemName+'</a></td><td>'+description+'</td><td>'+timestamp+'</td><td><div class="btn-group"><button type="button" class="btn btn-success btn-xs';
+            table+='<tr><td><a href="'+itemPath+'" target="_blank">'+itemName+'</a></td><td>'+description+'</td><td id="'+itemID+'details">Loading ...</td><td>'+timestamp+'</td><td><div class="btn-group"><button type="button" class="btn btn-success btn-xs';
             if(approveFlag==1){
                 table+=' active';
             }
