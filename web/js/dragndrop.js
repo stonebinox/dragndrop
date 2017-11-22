@@ -829,8 +829,12 @@ app.controller("agents",function($scope,$compile,$http){
         }
         table+='</tbody></table>';
         $("#itemlist").html(table);
-        for(var i=0;i<pastItems.length;i++){
-            var item=pastItems[i];
+        $compile("#itemlist")($scope);
+        $scope.getDimensions(0);
+    };
+    $scope.getDimensions=function(pos){
+        if(pos<$scope.itemList.length){
+            var item=$scope.itemList[pos];
             var itemID=item.iditem_master;
             var itemPath=item.item_path;
             var rev=itemPath.split("").reverse().join("");
@@ -845,11 +849,11 @@ app.controller("agents",function($scope,$compile,$http){
                     var width=img.naturalWidth;
                     var height=img.naturalHeight;
                     $("#"+itemID+"details").html(width+'x'+height);
-                    console.log(itemID);
+                    pos+=1;
+                    $scope.getDimensions(pos);
                 };
             }
         }
-        $compile("#itemlist")($scope);
     };
     $scope.approveFile=function(itemID){
         $http.get("approveItem?item_id="+itemID)
