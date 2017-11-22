@@ -361,6 +361,7 @@ app.controller('dd', function($scope,$compile,$http){
     $scope.displayPastItems=function(){
         var table='<strong>Past Uploaded Items</strong><br><table class="table"><thead><tr><th>Name</th><th>Description</th><th>Uploaded on</th><th>Actions</th></tr></thead><tbody>';
         var pastItems=$scope.pastItemList;
+        console.log(pastItems);
         for(var i=0;i<pastItems.length;i++){
             var item=pastItems[i];
             var itemID=item.iditem_master;
