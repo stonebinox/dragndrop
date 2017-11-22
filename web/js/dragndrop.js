@@ -804,24 +804,10 @@ app.controller("agents",function($scope,$compile,$http){
         for(var i=0;i<pastItems.length;i++){
             var item=pastItems[i];
             var itemID=item.iditem_master;
+            var itemPath=item.item_path;
             var timestamp=item.timestamp;
             var sp=timestamp.split(" ");
             timestamp=dateFormat(sp[0])+' at '+sp[1];
-            var itemPath=item.item_path;
-            var rev=itemPath.split("").reverse().join("");
-            var sp=rev.split(".");
-            var ext=$.trim(sp[0]);
-            ext=ext.split("").reverse().join("");
-            ext=ext.toLowerCase();
-            if((ext=="jpg")||(ext=="jpeg")||(ext=="png")||(ext=="bmp")){
-                var img=new Image();
-                img.src=itemPath;
-                img.onload=function(){
-                    var width=img.naturalWidth;
-                    var height=img.naturalHeight;
-                    $("#"+itemID+"details").html(width+'x'+height);
-                };
-            }
             var itemName=item.item_name;
             var approveFlag=item.approval_flag;
             var description=item.item_description;
@@ -843,6 +829,25 @@ app.controller("agents",function($scope,$compile,$http){
         }
         table+='</tbody></table>';
         $("#itemlist").html(table);
+        for(var i=0;i<pastItem.length;i++){
+            var item=pastItems[i];
+            var itemID=item.iditem_master;
+            var itemPath=item.item_path;
+            var rev=itemPath.split("").reverse().join("");
+            var sp=rev.split(".");
+            var ext=$.trim(sp[0]);
+            ext=ext.split("").reverse().join("");
+            ext=ext.toLowerCase();
+            if((ext=="jpg")||(ext=="jpeg")||(ext=="png")||(ext=="bmp")){
+                var img=new Image();
+                img.src=itemPath;
+                img.onload=function(){
+                    var width=img.naturalWidth;
+                    var height=img.naturalHeight;
+                    $("#"+itemID+"details").html(width+'x'+height);
+                };
+            }
+        }
         $compile("#itemlist")($scope);
     };
     $scope.approveFile=function(itemID){
