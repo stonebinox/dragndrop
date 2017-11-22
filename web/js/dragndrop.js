@@ -829,7 +829,7 @@ app.controller("agents",function($scope,$compile,$http){
         }
         table+='</tbody></table>';
         $("#itemlist").html(table);
-        for(var i=0;i<pastItem.length;i++){
+        for(var i=0;i<pastItems.length;i++){
             var item=pastItems[i];
             var itemID=item.iditem_master;
             var itemPath=item.item_path;
