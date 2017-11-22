@@ -76,7 +76,6 @@ app.controller('dd', function($scope,$compile,$http){
                                 .attr('src', e.target.result)
                                 .addClass("img-responsive")
                                 .css("width","60%");
-                            console.log(properties);
                             //$scope.renderProperties(properties);
                         };
                         reader.readAsDataURL(file);
@@ -287,7 +286,6 @@ app.controller('dd', function($scope,$compile,$http){
         }
     };
     $scope.removeItem=function(pos){
-        console.log("here");
         $scope.itemList.splice(pos,1);
         $scope.displayItemList();
     };
@@ -323,7 +321,6 @@ app.controller('dd', function($scope,$compile,$http){
                 contentType: false,
                 cache: false,
                 success:function(response){
-                    console.log(response);
                     response=$.trim(response);
                     if((validate(response))&&(response!="INVALID_PARAMETERS")){
                         if(response=="UPLOAD_ERROR"){
@@ -381,7 +378,6 @@ app.controller('dd', function($scope,$compile,$http){
     $scope.displayPastItems=function(){
         var table='<strong>Past Uploaded Items</strong><br><table class="table"><thead><tr><th>Name</th><th>Description</th><th>Uploaded on</th><th>Actions</th></tr></thead><tbody>';
         var pastItems=$scope.pastItemList;
-        console.log(pastItems);
         for(var i=0;i<pastItems.length;i++){
             var item=pastItems[i];
             var itemID=item.iditem_master;
