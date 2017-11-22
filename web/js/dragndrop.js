@@ -853,6 +853,9 @@ app.controller("agents",function($scope,$compile,$http){
                     $scope.getDimensions(pos);
                 };
             }
+            else{
+                $("#"+itemID+"details").html("NA");
+            }
         }
     };
     $scope.approveFile=function(itemID){
