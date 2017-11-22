@@ -240,14 +240,17 @@ app.controller('dd', function($scope,$compile,$http){
                 },
                 method: "POST",
                 success: function(response){
-                    console.log(response);
                     if((validate(response))&&(response!="INVALID_PARAMETERS")){ 
+                        response=$.trim(response);
                         if(response=="INVALID_ITEM_ID"){
                             messageBox("Invalid File","The file you are working on is invalid.");
                         }
                         else if(response=="ITEM_DESCRIPTION_UPDATED"){
                             $("#myModal").modal("hide");
                             $scope.getItems();
+                        }
+                        else{
+                            messageBox("Problem","Something went wrong while saving this description. This is the error we see: "+response);
                         }
                     }
                     else{
