@@ -222,8 +222,9 @@ app.controller('dd', function($scope,$compile,$http){
             $("#prop-table").append(tr2);
         }
         $scope.displayItemList();
-    };
+    }; //08049227000 08069151515
     $scope.showDescriptionForm=function(pos){
+        console.log(pos);
         var text='<form><div class="form-group"><label for="desc">Description</label><textarea name="desc" id="desc" placeholder="Enter a description for this file" class="form-control"></textarea></div><button type="button" class="btn btn-primary">Update</button></form>';
         messageBox("Add Description",text);
     };
