@@ -177,5 +177,20 @@ class itemMaster extends campaignMaster
             return "INVALID_ITEM_ID";
         }
     }
+    function saveDescription($description)
+    {
+        if($this->itemValid)
+        {
+            $app=$this->app;
+            $itemID=$this->item_id;
+            $im="UPDATE item_master SET item_description='$description' WHERE iditem_master='$itemID'";
+            $im=$app['db']->fetchAssoc($im);
+            return "ITEM_DESCRIPTION_UPDATED";
+        }
+        else
+        {
+            return "INVALID_ITEM_ID";
+        }
+    }
 }
 ?>

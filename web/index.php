@@ -384,6 +384,23 @@ $app->post("/uploadItem",function(Request $request) use($app){
         return "INVALID_PARAMETERS";
     }
 });
+$app->get("/saveDescription",function(Request $request) use($app){
+    if(($request->get("description"))&&($request->get("item_id")))
+    {
+        require("../classes/adminMaster.php");
+        require("../classes/userMaster.php");
+        require("../classes/brandMaster.php");
+        require("../classes/campaignMaster.php");
+        require("../classes/itemMaster.php");
+        $itemObj=new itemMaster($request->get("item_id"));
+        $response=$itemObj->saveDescription($request->get("description"));
+        return $response;
+    }
+    else
+    {
+        return "INVALID_PARAMETERS";
+    }
+});
 $app->get("/getItems",function() use($app){
     if(($app['session']->get("uid"))&&($app['session']->get("campaign_id")))
     {

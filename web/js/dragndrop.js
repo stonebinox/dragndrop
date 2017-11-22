@@ -223,16 +223,40 @@ app.controller('dd', function($scope,$compile,$http){
         }
         $scope.displayItemList();
     }; 
-    $scope.showDescriptionForm=function(pos){
-        console.log(pos);
-        var text='<form><div class="form-group"><label for="desc">Description</label><textarea name="desc" id="desc" placeholder="Enter a description for this file" class="form-control"></textarea></div><button type="button" class="btn btn-primary" ng-click="saveDescription('+pos+')">Update</button></form>';
+    $scope.showDescriptionForm=function(itemID){
+        var text='<form><div class="form-group"><label for="desc">Description</label><textarea name="desc" id="desc" placeholder="Enter a description for this file" class="form-control"></textarea></div><button type="button" class="btn btn-primary" ng-click="saveDescription('+itemID+')">Update</button></form>';
         messageBox("Add Description",text);
         $compile("#myModal")($scope);
     };
-    $scope.saveDescription=function(pos){
+    $scope.saveDescription=function(itemID){
         var desc=$.trim($("#desc").val());
         if(validate(desc)){
             $("#desc").parent().removeClass("has-error");
+            $.ajax({
+                url: 'saveDescription',
+                data:{
+                    item_id: itemID,
+                    description: desc
+                },
+                method: "POST",
+                success: function(response){
+                    if((validate(response))&&(response!="INVALID_PARAMETERS")){ 
+                        if(response=="INVALID_ITEM_ID"){
+                            messageBox("Invalid File","The file you are working on is invalid.");
+                        }
+                        else if(response=="ITEM_DESCRIPTION_UPDATED"){
+                            $("#myModal").modal("hide");
+                            $scope.getItems();
+                        }
+                    }
+                    else{
+                        messageBox("Problem","Something went wrong while trying to save this description.");
+                    }
+                },
+                error: function(response){
+                    messageBox("Problem","Something went wrong while trying to save this description.");
+                }
+            })
             var prop=["Description",desc];
             var item=$scope.itemList[pos];
             var properties=item[1];
@@ -255,7 +279,7 @@ app.controller('dd', function($scope,$compile,$http){
                 var filesize=properties[1];
                 filesize=filesize[1];
                 var filename=properties[0][1];
-                table+='<tr><td>'+filename+'</td><td>'+filesize+'</td><td><div class="btn-group" id="item'+i+'"><button type="button" class="btn btn-info btn-xs" ng-click="showDescriptionForm('+i+')">Edit description</button><button type="button" class="btn btn-primary btn-xs" ng-click="uploadItem('+i+')">Upload</button><button type="button" class="btn btn-default btn-xs" ng-click="removeItem('+i+')">Remove</button></div></td></tr>';
+                table+='<tr><td>'+filename+'</td><td>'+filesize+'</td><td><div class="btn-group" id="item'+i+'"><button type="button" class="btn btn-primary btn-xs" ng-click="uploadItem('+i+')">Upload</button><button type="button" class="btn btn-default btn-xs" ng-click="removeItem('+i+')">Remove</button></div></td></tr>';
             }
             table+='</tbody></table>';
             $("#itemlist").html(table);
@@ -387,7 +411,7 @@ app.controller('dd', function($scope,$compile,$http){
             else{
                 table+='<button type="button" class="btn btn-warning btn-xs">Under Review</button>';
             }
-            table+='<button type="button "class="btn btn-danger btn-xs">Delete</button></div></tr>';
+            table+='<button type="button" class="btn btn-info btn-xs" ng-click="showDescriptionForm('+itemID+')">Edit description</button><button type="button "class="btn btn-danger btn-xs">Delete</button></div></tr>';
         }
         table+='</tbody></table>';
         $("#pastitemlist").html(table);
