@@ -384,7 +384,7 @@ $app->post("/uploadItem",function(Request $request) use($app){
         return "INVALID_PARAMETERS";
     }
 });
-$app->get("/saveDescription",function(Request $request) use($app){
+$app->post("/saveDescription",function(Request $request) use($app){
     if(($request->get("description"))&&($request->get("item_id")))
     {
         require("../classes/adminMaster.php");
