@@ -277,7 +277,6 @@ app.controller('dd', function($scope,$compile,$http){
         var desc=properties[properties.length-1];
         desc=desc[1];
         var formdata=new FormData();
-        console.log(desc);
         formdata.append("items",file);
         formdata.append("description",desc);
         if(validate(file)){
