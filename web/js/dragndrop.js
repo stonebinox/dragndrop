@@ -238,6 +238,7 @@ app.controller('dd', function($scope,$compile,$http){
             properties.push(prop);
             item[1]=properties;
             $scope.itemList[pos]=item;
+            $("#myModal").modal("hide");
         }
         else{
             $("#desc").parent().addClass("has-error");
