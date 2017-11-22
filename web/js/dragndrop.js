@@ -276,9 +276,9 @@ app.controller('dd', function($scope,$compile,$http){
         var properties=item[1];
         var desc=properties[properties.length-1];
         desc=desc[1];
-        console.log(desc,"here");
         var formdata=new FormData();
         formdata.append("items",file);
+        formdata.append("description",desc);
         if(validate(file)){
             $.ajax({
                 xhr: function() {

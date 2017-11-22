@@ -368,7 +368,7 @@ $app->get("/campaignView",function() use($app){
     }
 });
 $app->post("/uploadItem",function(Request $request) use($app){
-    if(($app['session']->get("uid"))&&($app['session']->get("brand_id"))&&($app['session']->get("campaign_id"))&&($request->files->get("items")))
+    if(($app['session']->get("uid"))&&($app['session']->get("brand_id"))&&($app['session']->get("campaign_id"))&&($request->files->get("items")&&($request->get("description"))))
     {
         require("../classes/adminMaster.php");
         require("../classes/userMaster.php");
@@ -376,7 +376,7 @@ $app->post("/uploadItem",function(Request $request) use($app){
         require("../classes/campaignMaster.php");
         require("../classes/itemMaster.php");
         $itemObj=new itemMaster;
-        $response=$itemObj->uploadItem($app['session']->get("campaign_id"),$request->files->get("items"));
+        $response=$itemObj->uploadItem($app['session']->get("campaign_id"),$request->files->get("items",$request->get("description")));
         return $response;
     }
     else

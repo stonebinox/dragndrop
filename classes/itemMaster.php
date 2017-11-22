@@ -115,9 +115,10 @@ class itemMaster extends campaignMaster
             return "INVALID_CAMPAIGN_ID";
         }
     }
-    function uploadItem($campaignID,$fileObj)
+    function uploadItem($campaignID,$fileObj,$description='')
     {
         $s3Client=$GLOBALS['s3Client'];
+        $description=trim(addslashes(htmlentities($description)));
         $campaignID=addslashes(htmlentities($campaignID));
         campaignMaster::__construct($campaignID);
         if($this->campaignValid)
@@ -136,7 +137,7 @@ class itemMaster extends campaignMaster
                 return $e->getMessage();
             }
             $path=$result->get('ObjectURL');
-            $in="INSERT INTO item_master (timestamp,item_name,item_path,campaign_master_idcampaign_master) VALUES (NOW(),'$itemName','$path','$campaignID')";
+            $in="INSERT INTO item_master (timestamp,item_name,item_path,campaign_master_idcampaign_master,item_description) VALUES (NOW(),'$itemName','$path','$campaignID','$description')";
             $in=$app['db']->executeQuery($in);
             return "ITEM_ADDED";
         }
