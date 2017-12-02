@@ -368,6 +368,9 @@ app.controller('dd', function($scope,$compile,$http){
                     default:
                     messageBox("Problem","Something went wrong while loading past uploaded items. Please try again later.");
                     break;
+                    case "NO_ITEMS_FOUND":
+                    //do nothing
+                    break;
                 }
             }
         },
