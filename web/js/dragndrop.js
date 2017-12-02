@@ -287,6 +287,7 @@ app.controller('dd', function($scope,$compile,$http){
     };
     $scope.removeItem=function(pos){
         $scope.itemList.splice(pos,1);
+        $("#filedetails").html('');
         $scope.displayItemList();
     };
     $scope.uploadItem=function(pos){
